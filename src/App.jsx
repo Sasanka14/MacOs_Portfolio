@@ -1,10 +1,14 @@
-import Navbar from '#components/Navbar'
-import React from 'react'
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Navbar, Welcome } from '#components'
+
+gsap.registerPlugin(useGSAP);
 
 const App = () => {
   return (
     <main>
       <Navbar />
+      <Welcome />
     </main>
   )
 }
