@@ -1,0 +1,41 @@
+{/* External Imports*/}
+import dayjs from "dayjs";
+
+{/* Internal Imports*/}
+import { navIcons, navLinks } from "#constants";
+import React from "react";
+
+
+const Navbar = () => {
+  return (
+    <nav>
+        {/* Left Side */}
+      <div>
+        <img src="/images/logo.svg" alt="Logo" />
+        <p className="font-bold">SasankaWrites</p>
+
+        <ul>
+          {navLinks.map(({id , name}) => (
+            <li key={id}>
+              <p>{name}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+        {/* Right Side */}
+        <div>
+            <ul>
+                {navIcons.map(({id,img, alt}) => (
+                    <li key={id}>
+                        <img src={img} className="icon-hover" alt={'icon-${id}'} />
+                    </li>
+                ))}
+            </ul>
+
+            <time>{dayjs().format("ddd D MMM  HH:mm")}</time>
+        </div>
+    </nav>
+  );
+};
+
+export default Navbar;
