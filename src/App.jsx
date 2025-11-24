@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Navbar, Welcome } from '#components'
+import { Navbar, Welcome, Dock } from '#components'
 
 gsap.registerPlugin(useGSAP);
 
@@ -9,6 +9,7 @@ const App = () => {
     <main>
       <Navbar />
       <Welcome />
+      <Dock/>
     </main>
   )
 }

@@ -52,7 +52,7 @@ const navIcons = [
 const dockApps = [
   {
     id: "finder",
-    name: "Portfolio", // was "Finder"
+    name: "Projects", // was "Finder"
     icon: "finder.png",
     canOpen: true,
   },
