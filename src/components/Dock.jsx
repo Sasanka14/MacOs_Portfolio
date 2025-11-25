@@ -1,14 +1,32 @@
 import { dockApps } from "#constants";
+import useWindowStore from "#store/window";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Dock = () => {
+  const { openWindow, closeWindow, windows } = useWindowStore();
   const dockRef = useRef(null);
-  const toggleApp = (app) => {
-    // TODO IMPLEMENTATION OPEN WINDOW LOGIC
-  };
+
+  const toggleApp = useCallback(
+    (app) => {
+      if (!app?.canOpen) return;
+
+      const winState = windows?.[app.id];
+      if (!winState) return;
+
+      if (winState.isOpen) {
+        closeWindow(app.id);
+      } else {
+        openWindow(app.id);
+      }
+
+      // If you need the latest state immediately use:
+      // console.log(useWindowStore.getState().windows);
+    },
+    [windows, openWindow, closeWindow]
+  );
 
   useGSAP(() => {
     const dock = dockRef.current;
@@ -33,11 +51,12 @@ const Dock = () => {
         });
       });
     };
-    const handelMouseMove = (e) => {
-      const { left } = dock.getBoundingClientRect();
 
+    const handleMouseMove = (e) => {
+      const { left } = dock.getBoundingClientRect();
       animateIcons(e.clientX - left);
     };
+
     const resetIcons = () =>
       icons.forEach((icon) =>
         gsap.to(icon, {
@@ -47,15 +66,15 @@ const Dock = () => {
           ease: "power1.out",
         })
       );
-      dock.addEventListener("mousemove", handelMouseMove);
-       dock.addEventListener("mouseleave", resetIcons);
 
-       return () =>{
-        dock.removeEventListener("mousemove", handelMouseMove);
-        dock.removeEventListener("mouseleave", resetIcons);
-       }
-  },[]);
-  
+    dock.addEventListener("mousemove", handleMouseMove);
+    dock.addEventListener("mouseleave", resetIcons);
+
+    return () => {
+      dock.removeEventListener("mousemove", handleMouseMove);
+      dock.removeEventListener("mouseleave", resetIcons);
+    };
+  }, []);
 
   return (
     <section id="dock">
