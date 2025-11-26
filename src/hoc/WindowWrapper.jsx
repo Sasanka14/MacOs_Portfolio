@@ -7,15 +7,35 @@ import { Draggable } from "gsap/Draggable";
 const windowWrapper = (Component, windowKey) => {
   const Wrapped = (props) => {
     const { focusWindow, windows } = useWindowStore();
-    const windowState = windows[windowKey];
+    const windowState = windows?.[windowKey] ?? {
+      isOpen: false,
+      zIndex: 1000,
+      isMinimized: false,
+      isMaximized: false,
+      data: null,
+    };
     
-    if (!windowState) {
-      console.error(`Window "${windowKey}" not found in store`);
-      return null;
-    }
-    
-    const { isOpen, zIndex } = windowState;
+    const { isOpen, zIndex, isMinimized, isMaximized } = windowState;
     const ref = useRef(null);
+
+    useLayoutEffect(() => {
+      const element = ref.current;
+      if (!element) return;
+      
+      // Hide window when minimized
+      if (isMinimized) {
+        element.style.display = "none";
+      } else {
+        element.style.display = isOpen ? "block" : "none";
+      }
+      
+      // Handle maximize/unmaximize
+      if (isMaximized) {
+        element.classList.add("window-maximized");
+      } else {
+        element.classList.remove("window-maximized");
+      }
+    }, [isOpen, isMaximized, isMinimized]);
 
     useGSAP(() => {
       const element = ref.current;
@@ -32,7 +52,7 @@ const windowWrapper = (Component, windowKey) => {
           scale: 1,
           opacity: 1,
           y: 0,
-          duration: 0.5,
+          duration: 0.6,
           ease: "power3.out",
         }
       );
@@ -40,22 +60,25 @@ const windowWrapper = (Component, windowKey) => {
 
     useGSAP(() => {
       const element = ref.current;
-      if (!element || !isOpen) return;
+      if (!element || !isOpen || isMinimized || isMaximized) return;
 
       const [instance] = Draggable.create(element, {
         onPress: () => focusWindow(windowKey),
       });
-      return()=>instance.kill();
-    }, [isOpen]);
-
-    useLayoutEffect(() => {
-      const element = ref.current;
-      if (!element) return;
-      element.style.display = isOpen ? "block" : "none";
-    }, [isOpen]);
+      return () => instance.kill();
+    }, [isOpen, isMinimized, isMaximized, focusWindow]);
 
     return (
-      <section id={windowKey} ref={ref} style={{ zIndex }} className="absolute">
+      <section 
+        id={windowKey} 
+        ref={ref} 
+        style={{ 
+          zIndex,
+          overflow: 'hidden',
+          willChange: 'transform, opacity',
+        }} 
+        className="absolute"
+      >
         <Component {...props} />
       </section>
     );
