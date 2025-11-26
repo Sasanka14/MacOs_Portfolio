@@ -6,9 +6,14 @@ const WindowControls = ({ target }) => {
 
   return (
     <div id="window-controls">
-      <div className="close" onClick={() => closeWindow(target)} />
-      <div className="minimize" />
-      <div className="maximize" />
+      <button 
+        className="close" 
+        onClick={() => closeWindow(target)}
+        aria-label="Close window"
+        type="button"
+      />
+      <button className="minimize" aria-label="Minimize window" type="button" disabled />
+      <button className="maximize" aria-label="Maximize window" type="button" disabled />
     </div>
   );
 };

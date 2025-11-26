@@ -7,14 +7,19 @@ import { Draggable } from "gsap/Draggable";
 const windowWrapper = (Component, windowKey) => {
   const Wrapped = (props) => {
     const { focusWindow, windows } = useWindowStore();
-    const { isOpen, zIndex } = windows[windowKey];
+    const windowState = windows[windowKey];
+    
+    if (!windowState) {
+      console.error(`Window "${windowKey}" not found in store`);
+      return null;
+    }
+    
+    const { isOpen, zIndex } = windowState;
     const ref = useRef(null);
 
     useGSAP(() => {
       const element = ref.current;
       if (!element || !isOpen) return;
-
-      element.style.display = "block";
 
       gsap.fromTo(
         element,
@@ -40,7 +45,6 @@ const windowWrapper = (Component, windowKey) => {
       const [instance] = Draggable.create(element, {
         onPress: () => focusWindow(windowKey),
       });
-
       return()=>instance.kill();
     }, [isOpen]);
 
