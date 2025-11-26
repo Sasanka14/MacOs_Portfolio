@@ -6,7 +6,7 @@ import React, { useRef, useCallback } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Dock = () => {
-  const { openWindow, closeWindow, windows } = useWindowStore();
+  const { openWindow, closeWindow, minimizeWindow, focusWindow, windows } = useWindowStore();
   const dockRef = useRef(null);
 
   const toggleApp = useCallback(
@@ -16,30 +16,39 @@ const Dock = () => {
       const winState = windows?.[app.id];
       if (!winState) return;
 
-      if (winState.isOpen) {
+      // If minimized, unminimize it
+      if (winState.isMinimized) {
+        focusWindow(app.id);
+      }
+      // If already open and not minimized, close it
+      else if (winState.isOpen) {
         closeWindow(app.id);
-      } else {
+      }
+      // Otherwise, open it
+      else {
         openWindow(app.id);
       }
 
       // If you need the latest state immediately use:
       // console.log(useWindowStore.getState().windows);
     },
-    [windows, openWindow, closeWindow]
+    [windows, openWindow, closeWindow, minimizeWindow, focusWindow]
   );
 
   useGSAP(() => {
     const dock = dockRef.current;
     if (!dock) return;
 
-    const icons = dock.querySelectorAll(".dock-icon");
+    const iconContainers = dock.querySelectorAll(".dock-icon-container");
 
     const animateIcons = (mouseX) => {
       const { left } = dock.getBoundingClientRect();
 
-      icons.forEach((icon) => {
-        const { left: iconLeft, width } = icon.getBoundingClientRect();
-        const center = iconLeft - left + width / 2;
+      iconContainers.forEach((container) => {
+        const icon = container.querySelector(".dock-icon");
+        const indicator = container.querySelector(".dock-indicator");
+        const { left: containerLeft, width } = container.getBoundingClientRect();
+        const center = containerLeft - left + width / 2;
         const distance = Math.abs(mouseX - center);
         const intensity = Math.exp(-(distance ** 2.5) / 20000);
 
@@ -49,6 +58,15 @@ const Dock = () => {
           duration: 0.2,
           ease: "power1.out",
         });
+
+        if (indicator) {
+          gsap.to(indicator, {
+            scale: 1.2 + 0.3 * intensity,
+            y: -15 * intensity,
+            duration: 0.2,
+            ease: "power1.out",
+          });
+        }
       });
     };
 
@@ -58,14 +76,26 @@ const Dock = () => {
     };
 
     const resetIcons = () =>
-      icons.forEach((icon) =>
+      iconContainers.forEach((container) => {
+        const icon = container.querySelector(".dock-icon");
+        const indicator = container.querySelector(".dock-indicator");
+
         gsap.to(icon, {
           scale: 1,
           y: 0,
           duration: 0.3,
           ease: "power1.out",
-        })
-      );
+        });
+
+        if (indicator) {
+          gsap.to(indicator, {
+            scale: 1,
+            y: 0,
+            duration: 0.3,
+            ease: "power1.out",
+          });
+        }
+      });
 
     dock.addEventListener("mousemove", handleMouseMove);
     dock.addEventListener("mouseleave", resetIcons);
@@ -79,27 +109,32 @@ const Dock = () => {
   return (
     <section id="dock">
       <div ref={dockRef} className="dock-container">
-        {dockApps.map(({ id, name, icon, canOpen }) => (
-          <div key={id} className="relative flex justify-center">
-            <button
-              type="button"
-              className="dock-icon"
-              aria-label={name}
-              data-tooltip-id="dock-tooltip"
-              data-tooltip-content={name}
-              data-tooltip-delay-show={150}
-              disabled={!canOpen}
-              onClick={() => toggleApp({ id, canOpen })}
-            >
-              <img
-                src={`/images/${icon}`}
-                alt={name}
-                loading="lazy"
-                className={canOpen ? "" : "opacity-60"}
-              />
-            </button>
-          </div>
-        ))}
+        {dockApps.map(({ id, name, icon, canOpen }) => {
+          const isMinimized = windows?.[id]?.isMinimized ?? false;
+          
+          return (
+            <div key={id} className="dock-icon-container relative flex justify-center">
+              <button
+                type="button"
+                className="dock-icon"
+                aria-label={name}
+                data-tooltip-id="dock-tooltip"
+                data-tooltip-content={name}
+                data-tooltip-delay-show={150}
+                disabled={!canOpen}
+                onClick={() => toggleApp({ id, canOpen })}
+              >
+                <img
+                  src={`/images/${icon}`}
+                  alt={name}
+                  loading="lazy"
+                  className={canOpen ? "" : "opacity-60"}
+                />
+              </button>
+              {isMinimized && <div className="dock-indicator" />}
+            </div>
+          );
+        })}
         <Tooltip id="dock-tooltip" place="top" className="tooltip" />
       </div>
     </section>

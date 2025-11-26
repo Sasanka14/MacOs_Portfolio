@@ -82,7 +82,7 @@ body {
     @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
 
     .dock-container {
-      @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
+      @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl px-1.5 py-1.5 pb-4 flex items-end gap-1.5;
     }
 
     .tooltip {
@@ -96,6 +96,10 @@ body {
         @apply object-cover object-center;
       }
     }
+
+    .dock-indicator {
+      @apply absolute -bottom-2.5 left-1/2 -translate-x-1/2 size-1.5 bg-white rounded-full shadow-md pointer-events-none;
+    }
   }
 
   #window-controls {
@@ -106,16 +110,20 @@ body {
     }
 
     .minimize {
-      @apply size-3.5 rounded-full bg-[#ffc030];
+      @apply size-3.5 rounded-full bg-[#ffc030] cursor-pointer;
     }
 
     .maximize {
-      @apply size-3.5 rounded-full bg-[#2acb42];
+      @apply size-3.5 rounded-full bg-[#2acb42] cursor-pointer;
     }
   }
 
   #window-header {
     @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+  }
+
+  .window-maximized {
+    @apply !fixed !top-0 !left-0 !w-full !h-screen !rounded-none !m-0 !p-0 !right-auto !bottom-auto;
   }
 
   #safari {
