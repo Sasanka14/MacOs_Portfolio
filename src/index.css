@@ -119,7 +119,16 @@ body {
   }
 
   #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b-0 select-none text-sm text-gray-400 touch-none;
+    pointer-events: auto;
+  }
+
+  #window-header .search {
+    pointer-events: auto;
+  }
+
+  #window-header .search input {
+    pointer-events: auto;
   }
 
   .window-maximized {
@@ -130,10 +139,10 @@ body {
     @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
+      @apply flex items-center gap-3 w-2/3 bg-white border-0 rounded-lg px-3 py-2;
 
       input {
-        @apply placeholder:text-gray-400;
+        @apply placeholder:text-gray-400 outline-none;
       }
     }
 
