@@ -4,7 +4,8 @@ import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 
-const windowWrapper = (Component, windowKey) => {
+const windowWrapper = (Component, windowKey, options = {}) => {
+  const { enableDrag = true } = options;
   const Wrapped = (props) => {
     const { focusWindow, windows } = useWindowStore();
     const windowState = windows?.[windowKey] ?? {
@@ -60,13 +61,14 @@ const windowWrapper = (Component, windowKey) => {
 
     useGSAP(() => {
       const element = ref.current;
-      if (!element || !isOpen || isMinimized || isMaximized) return;
+      if (!element || !isOpen || isMinimized || isMaximized || !enableDrag) return;
 
       const [instance] = Draggable.create(element, {
         onPress: () => focusWindow(windowKey),
+        allowEventDefault: true,
       });
       return () => instance.kill();
-    }, [isOpen, isMinimized, isMaximized, focusWindow]);
+    }, [isOpen, isMinimized, isMaximized, focusWindow, enableDrag]);
 
     return (
       <section 

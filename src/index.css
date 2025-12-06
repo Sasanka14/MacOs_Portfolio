@@ -123,17 +123,21 @@ body {
   }
 
   .window-maximized {
-    @apply !fixed !top-0 !left-0 !w-full !h-screen !rounded-none !m-0 !p-0 !right-auto !bottom-auto;
+    @apply !fixed !top-0 !left-0 !w-full !h-screen !rounded-t-lg !m-0 !p-0 !right-auto !bottom-auto;
   }
 
   #safari {
     @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
 
     .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
+      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2 cursor-text;
 
       input {
-        @apply placeholder:text-gray-400;
+        @apply placeholder:text-gray-400 bg-transparent outline-none w-full text-gray-800 cursor-text;
+
+        &:focus {
+          @apply outline-none;
+        }
       }
     }
 
