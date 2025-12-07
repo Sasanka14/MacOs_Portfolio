@@ -44,18 +44,20 @@ const Safari = () => {
 
   // Handle keyboard shortcut (Cmd+F or Ctrl+F to focus search)
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "f") {
-        e.preventDefault();
-        // Only focus if Safari window is open and not minimized
-        if (safariWindow?.isOpen && !safariWindow?.isMinimized) {
-          searchInputRef.current?.focus();
-        }
+  const handleKeyDown = (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "f") {
+      e.preventDefault();
+      const currentSafari = useWindowStore.getState().windows?.safari;
+      if (currentSafari?.isOpen && !currentSafari?.isMinimized) {
+        searchInputRef.current?.focus();
       }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [safariWindow?.isOpen, safariWindow?.isMinimized]);
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
+}, []); // <- empty deps, but uses current store state in handler
+
 
   // Reset to first page when filters change
   useEffect(() => {
@@ -232,6 +234,6 @@ const Safari = () => {
   );
 };
 
-const SafariWindow = windowWrapper(Safari, "safari", { enableDrag: true });
+const SafariWindow = windowWrapper(Safari, "safari");
 
 export default SafariWindow;
