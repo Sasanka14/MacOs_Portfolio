@@ -62,10 +62,14 @@ const windowWrapper = (Component, windowKey, options = {}) => {
 
     useGSAP(() => {
       const element = ref.current;
-      if (!element || !isOpen || isMinimized || isMaximized || !enableDrag) return;
+      if (!element || !isOpen || isMinimized || isMaximized) return;
+
+      // If drag is disabled, return early and don't create draggable
+      if (!enableDrag) return;
 
       const header = element.querySelector("#window-header");
       if (!header) {
+        // Fallback: if no header, use ignore list
         const [instance] = Draggable.create(element, {
           onPress: () => focusWindow(windowKey),
           ignore: "input, textarea, button, a, .icon, .search",
@@ -73,6 +77,8 @@ const windowWrapper = (Component, windowKey, options = {}) => {
         return () => instance.kill();
       }
 
+      // Use header as trigger - only the header can be dragged
+      // This allows input/button interactions in the content
       const [instance] = Draggable.create(element, {
         trigger: header,
         onPress: () => focusWindow(windowKey),

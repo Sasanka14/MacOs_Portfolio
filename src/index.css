@@ -119,7 +119,7 @@ body {
   }
 
   #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b-0 select-none text-sm text-gray-400 touch-none;
+    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b-0 select-none text-sm text-gray-400 touch-none cursor-grab active:cursor-grabbing;
     pointer-events: auto;
   }
 

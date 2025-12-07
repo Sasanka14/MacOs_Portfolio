@@ -232,6 +232,6 @@ const Safari = () => {
   );
 };
 
-const SafariWindow = windowWrapper(Safari, "safari", { enableDrag: false });
+const SafariWindow = windowWrapper(Safari, "safari", { enableDrag: true });
 
 export default SafariWindow;
