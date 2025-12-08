@@ -88,14 +88,16 @@ const Safari = () => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       if (isNaN(dateA) || isNaN(dateB)) return 0;
-      return dateA - dateB;
+      // Newest first (descending)
+      return dateB - dateA;
     });
   } else if (sortBy === "oldest") {
     sorted.sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
       if (isNaN(dateA) || isNaN(dateB)) return 0;
-      return dateB - dateA;
+      // Oldest first (ascending)
+      return dateA - dateB;
     });
   } else if (sortBy === "alphabetical") {
     sorted.sort((a, b) => a.title.localeCompare(b.title));
