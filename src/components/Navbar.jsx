@@ -2,13 +2,31 @@
 import dayjs from "dayjs";
 
 {/* Internal Imports*/}
-import { navIcons, navLinks } from "#constants";
+import { navIcons, navLinks, locations } from "#constants";
 import React from "react";
 import useWindowStore from "#store/window";
+import useLocationStore from "#store/location";
 
 
 const Navbar = () => {
   const {openWindow} = useWindowStore();
+  const {setActiveLocation} = useLocationStore();
+  
+  const handleNavClick = (type, href) => {
+    if (href) {
+      return window.open(href, "_blank");
+    }
+    if (type === 'about') {
+      setActiveLocation(locations.about);
+      return openWindow('finder');
+    }
+    if (type === 'finder') {
+      setActiveLocation(locations.work);
+      return openWindow('finder');
+    }
+    openWindow(type);
+  };
+
   return (
     <nav>
         {/* Left Side */}
@@ -17,8 +35,8 @@ const Navbar = () => {
         <p className="font-bold">SasankaWrites</p>
 
         <ul>
-          {navLinks.map(({id , name,type}) => (
-            <li key={id} onClick={()=> openWindow(type)}>
+          {navLinks.map(({id , name, type, href}) => (
+            <li key={id} onClick={()=> handleNavClick(type, href)}>
               <p>{name}</p>
             </li>
           ))}
