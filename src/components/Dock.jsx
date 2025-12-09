@@ -1,5 +1,6 @@
-import { dockApps } from "#constants";
+import { dockApps, locations } from "#constants";
 import useWindowStore from "#store/window";
+import useLocationStore from "#store/location";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import React, { useRef, useCallback } from "react";
@@ -7,6 +8,7 @@ import { Tooltip } from "react-tooltip";
 
 const Dock = () => {
   const { openWindow, closeWindow, minimizeWindow, focusWindow, windows } = useWindowStore();
+  const { setActiveLocation } = useLocationStore();
   const dockRef = useRef(null);
 
   const toggleApp = useCallback(
@@ -15,6 +17,19 @@ const Dock = () => {
 
       const winState = windows?.[app.id];
       if (!winState) return;
+
+      // Special handling for archive - open Finder with archive location
+      if (app.id === 'archive') {
+        setActiveLocation(locations.archive);
+        if (winState.isMinimized) {
+          focusWindow('finder');
+        } else if (windows?.finder?.isOpen) {
+          closeWindow('finder');
+        } else {
+          openWindow('finder');
+        }
+        return;
+      }
 
       // If minimized, unminimize it
       if (winState.isMinimized) {
@@ -32,7 +47,7 @@ const Dock = () => {
       // If you need the latest state immediately use:
       // console.log(useWindowStore.getState().windows);
     },
-    [windows, openWindow, closeWindow, minimizeWindow, focusWindow]
+    [windows, openWindow, closeWindow, minimizeWindow, focusWindow, setActiveLocation]
   );
 
   useGSAP(() => {
