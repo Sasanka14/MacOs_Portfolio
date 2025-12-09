@@ -90,9 +90,9 @@ const dockApps = [
   },
   {
     id: "teams",
-    name: "Teams", // was "Teams"
+    name: "Teams",
     icon: "team.png",
-    canOpen: false,
+    canOpen: true,
   }
 ];
 
@@ -566,11 +566,128 @@ const ARCHIVE_LOCATION = {
   ],
 };
 
+const TEAMS_LOCATION = {
+  id: 5,
+  type: "teams",
+  name: "Teams",
+  icon: "/icons/teams.svg",
+  kind: "folder",
+  children: [
+    // Team Member 1: Purba Das
+    {
+      id: 201,
+      name: "Purba Das",
+      icon: "/images/folder.png",
+      kind: "folder",
+      position: "top-10 left-5",
+      windowPosition: "top-[8vh] left-8",
+      children: [
+        {
+          id: 202,
+          name: "about-me.txt",
+          icon: "/images/txt.png",
+          kind: "file",
+          fileType: "txt",
+          position: "top-5 left-10",
+          subtitle: "Undergraduate Law Student (LLB)",
+          image: "/images/purba.jpg",
+          description: [
+            "Hello! I'm Purba Das — an undergraduate law student pursuing LLB.",
+            "I have a strong interest in legal research, constitutional law, and case analysis.",
+            "I enjoy academic writing, critical reasoning, and participating in discussions related to law and justice."
+          ]
+        },
+        {
+          id: 203,
+          name: "Purba-Resume.pdf",
+          icon: "/images/pdf.png",
+          kind: "file",
+          fileType: "pdf",
+          position: "top-16 left-48",
+          href: "/files/purba-das-resume.pdf"
+        },
+        {
+          id: 204,
+          name: "profile-1.png",
+          icon: "/images/image.png",
+          kind: "file",
+          fileType: "img",
+          position: "top-44 left-80",
+          imageUrl: "/images/purba-1.png"
+        },
+        {
+          id: 205,
+          name: "socials.webloc",
+          icon: "/images/safari.png",
+          kind: "file",
+          fileType: "url",
+          position: "top-60 right-20",
+          href: "https://linkedin.com"
+        }
+      ]
+    },
+    // Team Member 2: Krishna
+    {
+      id: 301,
+      name: "Krishna",
+      icon: "/images/folder.png",
+      kind: "folder",
+      position: "top-52 right-80",
+      windowPosition: "top-[20vh] left-8",
+      children: [
+        {
+          id: 302,
+          name: "about-me.txt",
+          icon: "/images/txt.png",
+          kind: "file",
+          fileType: "txt",
+          position: "top-5 right-10",
+          subtitle: "Student (Class 11)",
+          image: "/images/krishna.jpg",
+          description: [
+            "Hi, I'm Krishna — a student currently studying in Class 11.",
+            "I'm interested in learning new technologies, exploring creative ideas, and building strong academic foundations.",
+            "I enjoy experimenting with projects, watching educational content, and improving my skills step by step."
+          ]
+        },
+        {
+          id: 303,
+          name: "school-project.png",
+          icon: "/images/image.png",
+          kind: "file",
+          fileType: "img",
+          position: "top-16 left-48",
+          imageUrl: "/images/krishna-project.png"
+        },
+        {
+          id: 304,
+          name: "intro-video.mp4",
+          icon: "/images/video.png",
+          kind: "file",
+          fileType: "video",
+          position: "top-44 right-80",
+          href: "/videos/krishna-intro.mp4"
+        },
+        {
+          id: 305,
+          name: "socials.webloc",
+          icon: "/images/safari.png",
+          kind: "file",
+          fileType: "url",
+          position: "top-60 left-5",
+          href: "https://instagram.com"
+        }
+      ]
+    }
+  ]
+};
+
 export const locations = {
   work: WORK_LOCATION,
   about: ABOUT_LOCATION,
   resume: RESUME_LOCATION,
   archive: ARCHIVE_LOCATION,
+  teams: TEAMS_LOCATION,
 };
 
 const INITIAL_Z_INDEX = 1000;
@@ -626,6 +743,13 @@ const WINDOW_CONFIG = {
     isMaximized: false,
   },
   imgfile: {
+    isOpen: false,
+    zIndex: INITIAL_Z_INDEX,
+    data: null,
+    isMinimized: false,
+    isMaximized: false,
+  },
+  teams: {
     isOpen: false,
     zIndex: INITIAL_Z_INDEX,
     data: null,
