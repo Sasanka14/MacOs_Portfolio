@@ -11,7 +11,7 @@ const Image = () => {
     return null;
   }
 
-  const { name, imageUrl } = data;
+  const { name = 'Untitled Image', imageUrl } = data;
 
   return (
     <>

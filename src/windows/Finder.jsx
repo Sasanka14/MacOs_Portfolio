@@ -17,7 +17,9 @@ const Finder = () => {
     // Handle fig and url types with explicit href validation
     if (['fig', 'url'].includes(item.fileType)) {
       if (item.href) {
-        return window.open(item.href, "_blank");
+        const newWindow = window.open(item.href, "_blank", "noopener,noreferrer");
+        if (newWindow) newWindow.opener = null;
+        return;
       } else {
         console.warn(`Missing href for ${item.fileType} file: ${item.name}`);
         return; // Early return to avoid fallback
