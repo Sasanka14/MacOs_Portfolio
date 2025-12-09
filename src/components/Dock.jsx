@@ -31,6 +31,21 @@ const Dock = () => {
         return;
       }
 
+      // Special handling for teams - open Teams window with teams location data
+      if (app.id === 'teams') {
+        const teamsState = windows?.teams;
+        if (!teamsState) return;
+        
+        if (teamsState.isMinimized) {
+          focusWindow('teams');
+        } else if (teamsState.isOpen) {
+          closeWindow('teams');
+        } else {
+          openWindow('teams', locations.teams);
+        }
+        return;
+      }
+
       const winState = windows?.[app.id];
       if (!winState) return;
 
