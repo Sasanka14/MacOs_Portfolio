@@ -158,24 +158,24 @@ const socials = [
   },
   {
     id: 2,
-    text: "Platform",
+    text: "Blog",
     icon: "/icons/atom.svg",
     bg: "#4bcb63",
-    link: "https://jsmastery.com/",
+    link: "https://myblog.com",
   },
   {
     id: 3,
-    text: "Twitter/X",
-    icon: "/icons/twitter.svg",
+    text: "Instagram",
+    icon: "/icons/insta.svg",
     bg: "#ff866b",
-    link: "https://x.com/jsmasterypro",
+    link: "https://www.instagram.com/sashank.codes_",
   },
   {
     id: 4,
     text: "LinkedIn",
     icon: "/icons/linkedin.svg",
     bg: "#05b6f6",
-    link: "https://www.linkedin.com/in/sasanka-sekhar-kundu-b746072a7/",
+    link: "https://www.linkedin.com/in/sasankawrites/",
   },
 ];
 
@@ -450,8 +450,8 @@ const ABOUT_LOCATION = {
       image: "/images/sasanka.jpg",
       description: [
         "Hey! I'm Sasanka 👋 — a computer science student and aspiring software engineer who enjoys building practical, well-structured applications that solve real-world problems.",
-        "I work with JavaScript, TypeScript, React, and Next.js, and I'm building strength in full-stack development, data structures, and system thinking, with experience in Python, Java, and AI/ML.",
-        "Outside of coding, I enjoy gaming, planning new projects, and watching anime.",
+        "I work with JavaScript, TypeScript, React, and Next.js, and I’m building strength in full-stack development, data structures, and system thinking, with experience in Python, Java, and AI/ML.",
+        "Outside of coding , I enjoy gaming , planning new projects , and watching anime.",
       ],
     },
   ],
@@ -572,4 +572,11 @@ const WINDOW_CONFIG = {
   },
 };
 
-export { INITIAL_Z_INDEX, WINDOW_CONFIG };
+const quickActions = [
+  { icon: "location", label: "Location", value: "India" },
+  { icon: "status", label: "Status", value: "Available for collaboration" },
+  { icon: "time", label: "Response Time", value: "Within 24 hours" },
+  { icon: "work", label: "Open To", value: "Internships · Freelance · Full-time" },
+];
+
+export { INITIAL_Z_INDEX, WINDOW_CONFIG, quickActions };

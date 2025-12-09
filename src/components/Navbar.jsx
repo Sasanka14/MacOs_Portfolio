@@ -14,7 +14,9 @@ const Navbar = () => {
   
   const handleNavClick = (type, href) => {
     if (href) {
-      return window.open(href, "_blank");
+      const newWindow = window.open(href, "_blank", "noopener,noreferrer");
+      if (newWindow) newWindow.opener = null;
+      return;
     }
     if (type === 'about') {
       setActiveLocation(locations.about);
