@@ -83,15 +83,15 @@ const dockApps = [
     canOpen: true,
   },
   {
-    id: "trash",
-    name: "Archive", // was "Trash"
+    id: "archive",
+    name: "Archive",
     icon: "archive.png",
-    canOpen: false,
+    canOpen: true,
   },
   {
     id: "teams",
     name: "Teams", // was "Teams"
-    icon: "teams.png",
+    icon: "team.png",
     canOpen: false,
   }
 ];
@@ -476,31 +476,93 @@ const RESUME_LOCATION = {
   ],
 };
 
-const TRASH_LOCATION = {
+const ARCHIVE_LOCATION = {
   id: 4,
-  type: "trash",
-  name: "Trash",
-  icon: "/icons/trash.svg",
+  type: "archive",
+  name: "Archive",
+  icon: "/icons/archive.svg",
   kind: "folder",
   children: [
     {
-      id: 1,
-      name: "trash1.png",
-      icon: "/images/image.png",
-      kind: "file",
-      fileType: "img",
-      position: "top-10 left-10",
-      imageUrl: "/images/trash-1.png",
+      id: 101,
+      name: "AI in Traffic Optimization",
+      icon: "/images/folder.png",
+      kind: "folder",
+      position: "top-10 left-6",
+      windowPosition: "top-[8vh] left-8",
+      children: [
+        {
+          id: 1,
+          name: "Abstract.txt",
+          kind: "file",
+          fileType: "txt",
+          icon: "/images/txt.png",
+          description: [
+            "This research explores AI-based traffic optimization systems and their real-world applications.",
+            "The paper focuses on real-time congestion detection using machine learning algorithms.",
+            "Experiments show a 23% improvement in traffic flow efficiency with reduced emissions."
+          ],
+          position: "top-6 left-8"
+        },
+        {
+          id: 2,
+          name: "Paper.pdf",
+          kind: "file",
+          fileType: "pdf",
+          icon: "/images/pdf.png",
+          position: "top-16 left-48"
+        },
+        {
+          id: 3,
+          name: "Architecture.png",
+          kind: "file",
+          fileType: "img",
+          icon: "/images/image.png",
+          imageUrl: "/images/research-architecture.png",
+          position: "top-44 left-24"
+        },
+        {
+          id: 4,
+          name: "Research Link.url",
+          kind: "file",
+          fileType: "url",
+          icon: "/images/safari.png",
+          href: "https://arxiv.org",
+          position: "top-60 left-56"
+        }
+      ]
     },
     {
-      id: 2,
-      name: "trash2.png",
-      icon: "/images/image.png",
-      kind: "file",
-      fileType: "img",
-      position: "top-40 left-80",
-      imageUrl: "/images/trash-2.png",
-    },
+      id: 102,
+      name: "Deep Learning for NLP",
+      icon: "/images/folder.png",
+      kind: "folder",
+      position: "top-52 right-80",
+      windowPosition: "top-[20vh] left-8",
+      children: [
+        {
+          id: 1,
+          name: "Summary.txt",
+          kind: "file",
+          fileType: "txt",
+          icon: "/images/txt.png",
+          description: [
+            "A comprehensive study on transformer architectures for natural language processing.",
+            "Covers BERT, GPT, and emerging attention mechanisms in modern NLP systems.",
+            "Performance benchmarks across multiple datasets demonstrate state-of-the-art results."
+          ],
+          position: "top-6 left-8"
+        },
+        {
+          id: 2,
+          name: "Paper.pdf",
+          kind: "file",
+          fileType: "pdf",
+          icon: "/images/pdf.png",
+          position: "top-16 left-48"
+        }
+      ]
+    }
   ],
 };
 
@@ -508,7 +570,7 @@ export const locations = {
   work: WORK_LOCATION,
   about: ABOUT_LOCATION,
   resume: RESUME_LOCATION,
-  trash: TRASH_LOCATION,
+  archive: ARCHIVE_LOCATION,
 };
 
 const INITIAL_Z_INDEX = 1000;

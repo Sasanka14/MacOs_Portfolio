@@ -2,7 +2,7 @@ import WindowControls from "#components/WindowControls";
 import { Search } from "lucide-react";
 import React from "react";
 import windowWrapper from "#hoc/WindowWrapper";
-import { locations } from "#constants";
+import { locations, WINDOW_CONFIG } from "#constants";
 import useLocationStore from "#store/location";
 import clsx from "clsx";
 import useWindowStore from "#store/window";
@@ -11,6 +11,12 @@ const Finder = () => {
   const { activeLocation, setActiveLocation } = useLocationStore();
 
   const openItem = (item) => {
+    // Validate item exists
+    if (!item) {
+      console.warn('Cannot open item: item is null or undefined', item);
+      return;
+    }
+
     if (item.fileType === 'pdf') return openWindow('resume');
     if (item.kind === 'folder') return setActiveLocation(item);
     
@@ -21,7 +27,7 @@ const Finder = () => {
         if (newWindow) newWindow.opener = null;
         return;
       } else {
-        console.warn(`Missing href for ${item.fileType} file: ${item.name}`);
+        console.warn(`Missing href for ${item.fileType} file: ${item.name}`, item);
         return; // Early return to avoid fallback
       }
     }
@@ -29,7 +35,23 @@ const Finder = () => {
     if (item.fileType === 'txt') return openWindow('txtfile', item);
     if (item.fileType === 'img') return openWindow('imgfile', item);
 
-    openWindow(`${item.fileType}${item.kind}`, item);
+    // Defensive fallback: validate fileType and kind before concatenating
+    const fileType = typeof item.fileType === 'string' ? item.fileType : 'unknown';
+    const kind = typeof item.kind === 'string' ? item.kind : 'unknown';
+
+    if (fileType === 'unknown' || kind === 'unknown') {
+      console.warn(`Cannot open item with invalid fileType or kind. fileType: "${fileType}", kind: "${kind}", item:`, item);
+      return;
+    }
+
+    // Validate concatenated key exists in WINDOW_CONFIG
+    const windowKey = `${fileType}${kind}`;
+    if (!WINDOW_CONFIG[windowKey]) {
+      console.warn(`Window config not found for key "${windowKey}". fileType: "${fileType}", kind: "${kind}", item:`, item);
+      return;
+    }
+
+    openWindow(windowKey, item);
   };
 
   const renderList = (name, items) => (
