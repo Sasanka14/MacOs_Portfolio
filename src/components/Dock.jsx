@@ -15,21 +15,24 @@ const Dock = () => {
     (app) => {
       if (!app?.canOpen) return;
 
-      const winState = windows?.[app.id];
-      if (!winState) return;
-
       // Special handling for archive - open Finder with archive location
       if (app.id === 'archive') {
         setActiveLocation(locations.archive);
-        if (winState.isMinimized) {
+        const finderState = windows?.finder;
+        if (!finderState) return;
+        
+        if (finderState.isMinimized) {
           focusWindow('finder');
-        } else if (windows?.finder?.isOpen) {
+        } else if (finderState.isOpen) {
           closeWindow('finder');
         } else {
           openWindow('finder');
         }
         return;
       }
+
+      const winState = windows?.[app.id];
+      if (!winState) return;
 
       // If minimized, unminimize it
       if (winState.isMinimized) {

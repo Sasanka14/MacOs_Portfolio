@@ -632,13 +632,6 @@ const WINDOW_CONFIG = {
     isMinimized: false,
     isMaximized: false,
   },
-  archive: {
-    isOpen: false,
-    zIndex: INITIAL_Z_INDEX,
-    data: null,
-    isMinimized: false,
-    isMaximized: false,
-  },
 };
 
 const quickActions = [

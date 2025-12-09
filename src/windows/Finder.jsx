@@ -2,7 +2,7 @@ import WindowControls from "#components/WindowControls";
 import { Search } from "lucide-react";
 import React from "react";
 import windowWrapper from "#hoc/WindowWrapper";
-import { locations } from "#constants";
+import { locations, WINDOW_CONFIG } from "#constants";
 import useLocationStore from "#store/location";
 import clsx from "clsx";
 import useWindowStore from "#store/window";
@@ -44,7 +44,14 @@ const Finder = () => {
       return;
     }
 
-    openWindow(`${fileType}${kind}`, item);
+    // Validate concatenated key exists in WINDOW_CONFIG
+    const windowKey = `${fileType}${kind}`;
+    if (!WINDOW_CONFIG[windowKey]) {
+      console.warn(`Window config not found for key "${windowKey}". fileType: "${fileType}", kind: "${kind}", item:`, item);
+      return;
+    }
+
+    openWindow(windowKey, item);
   };
 
   const renderList = (name, items) => (
