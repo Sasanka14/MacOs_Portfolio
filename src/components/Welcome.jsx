@@ -447,8 +447,8 @@ const Welcome = () => {
         </h1>
       </div>
 
-      {/* Right Sidebar - Weather */}
-      <div className="absolute left-8 -top-90 max-lg:hidden">
+      {/* Left Sidebar - Weather */}
+      <div className="absolute left-8 top-20 max-lg:hidden">
         <WeatherWidget />
       </div>
 
