@@ -6,5 +6,5 @@ import Text from "#windows/Text";
 import Image from "#windows/Image";
 import Contact from "#windows/Contact";
 import Teams from "#windows/Teams";
-
-export {Terminal, Safari, Resume, Finder, Text, Image, Contact, Teams};
+import Photos from "#windows/Photos";
+export {Terminal, Safari, Resume, Finder, Text, Image, Contact, Teams, Photos};

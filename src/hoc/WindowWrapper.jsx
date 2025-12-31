@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 
 const windowWrapper = (Component, windowKey, options = {}) => {
-  const { enableDrag = true } = options;
+  const { enableDrag = true, width, height } = options;
   
   const Wrapped = (props) => {
     const { focusWindow, windows } = useWindowStore();
@@ -94,6 +94,8 @@ const windowWrapper = (Component, windowKey, options = {}) => {
           zIndex,
           overflow: 'hidden',
           willChange: 'transform, opacity',
+          ...(width && { width }),
+          ...(height && { height }),
         }} 
         className="absolute"
       >

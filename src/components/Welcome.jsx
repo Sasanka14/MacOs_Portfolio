@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Cloud, CloudRain, Sun, Wind } from "lucide-react";
+import { Cloud, CloudRain, Sun, Wind, CloudSnow, CloudDrizzle, Eye } from "lucide-react";
 
 const FONT_WEIGHTS = {
   subtitle: { min: 100, max: 400, default: 100 },
@@ -121,27 +121,296 @@ const CalendarWidget = () => {
 };
 
 const WeatherWidget = () => {
+  const [weather, setWeather] = useState(null);
+  const [hourlyForecast, setHourlyForecast] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [city, setCity] = useState("Navi Mumbai");
+
+  // Map OpenWeatherMap condition codes to Lucide icons
+  const getWeatherIcon = (condition) => {
+    if (!condition) return <Sun className="w-12 h-12 text-yellow-300" />;
+    
+    const code = condition.toLowerCase();
+    if (code.includes("clear") || code.includes("sunny")) {
+      return <Sun className="w-12 h-12 text-yellow-300" />;
+    } else if (code.includes("cloud")) {
+      return <Cloud className="w-12 h-12 text-gray-300" />;
+    } else if (code.includes("rain")) {
+      return <CloudRain className="w-12 h-12 text-blue-300" />;
+    } else if (code.includes("drizzle")) {
+      return <CloudDrizzle className="w-12 h-12 text-blue-200" />;
+    } else if (code.includes("snow")) {
+      return <CloudSnow className="w-12 h-12 text-white" />;
+    }
+    return <Cloud className="w-12 h-12 text-gray-300" />;
+  };
+
+  const getSmallWeatherIcon = (condition) => {
+    if (!condition) return <Cloud className="w-4 h-4 mx-auto opacity-70" />;
+    
+    const code = condition.toLowerCase();
+    if (code.includes("clear") || code.includes("sunny")) {
+      return <Sun className="w-4 h-4 mx-auto opacity-70 text-yellow-300" />;
+    } else if (code.includes("cloud")) {
+      return <Cloud className="w-4 h-4 mx-auto opacity-70" />;
+    } else if (code.includes("rain")) {
+      return <CloudRain className="w-4 h-4 mx-auto opacity-70" />;
+    } else if (code.includes("drizzle")) {
+      return <CloudDrizzle className="w-4 h-4 mx-auto opacity-70" />;
+    } else if (code.includes("snow")) {
+      return <CloudSnow className="w-4 h-4 mx-auto opacity-70" />;
+    }
+    return <Cloud className="w-4 h-4 mx-auto opacity-70" />;
+  };
+
+  const fetchWeatherByCoordinates = async (lat, lon) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+      if (!apiKey) {
+        console.warn("⚠️ Weather API key not configured. Set VITE_WEATHER_API_KEY in .env.local");
+        throw new Error("Weather API key not configured");
+      }
+
+      console.log("🔄 Fetching weather for coordinates:", { lat, lon });
+
+      // Fetch current weather and forecast
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("❌ Weather API error:", response.status, errorData);
+        throw new Error(`API Error: ${errorData.message || response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("✅ Weather data received:", data);
+      
+      // Extract current weather (first forecast entry)
+      const current = data.list[0];
+      const high = Math.max(...data.list.slice(0, 8).map(d => d.main.temp_max));
+      const low = Math.min(...data.list.slice(0, 8).map(d => d.main.temp_min));
+
+      setWeather({
+        temp: Math.round(current.main.temp),
+        condition: current.weather[0].main,
+        high: Math.round(high),
+        low: Math.round(low),
+      });
+
+      // Extract hourly forecast (next 6 hours)
+      const hourly = data.list.slice(0, 6).map((item) => ({
+        time: new Date(item.dt * 1000).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        }),
+        condition: item.weather[0].main,
+        temp: Math.round(item.main.temp),
+      }));
+
+      setHourlyForecast(hourly);
+      setCity(data.city.name);
+      console.log("✅ Weather widget loaded for:", data.city.name);
+    } catch (err) {
+      console.error("❌ Weather fetch error:", err);
+      setError(err.message);
+      // Fallback to default city
+      fetchWeatherByCity("Navi Mumbai");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchWeatherByCity = async (cityName) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+      if (!apiKey) {
+        console.warn("⚠️ Weather API key not configured. Set VITE_WEATHER_API_KEY in .env.local");
+        throw new Error("Weather API key not configured");
+      }
+
+      console.log("🔄 Fetching weather for city:", cityName);
+
+      // Get coordinates for city
+      const geoResponse = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`
+      );
+
+      if (!geoResponse.ok) {
+        const errorData = await geoResponse.json().catch(() => ({}));
+        console.error("❌ Geo API error:", geoResponse.status, errorData);
+        throw new Error("City not found");
+      }
+
+      const geoData = await geoResponse.json();
+      if (geoData.length === 0) {
+        throw new Error("City not found");
+      }
+
+      const { lat, lon, name } = geoData[0];
+      setCity(name);
+      console.log("📍 City location found:", { name, lat, lon });
+
+      // Fetch weather using coordinates
+      const weatherResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
+      );
+
+      if (!weatherResponse.ok) {
+        const errorData = await weatherResponse.json().catch(() => ({}));
+        console.error("❌ Weather API error:", weatherResponse.status, errorData);
+        throw new Error(`API Error: ${errorData.message || weatherResponse.statusText}`);
+      }
+
+      const data = await weatherResponse.json();
+      console.log("✅ Weather data received:", data);
+      
+      // Extract current weather
+      const current = data.list[0];
+      const high = Math.max(...data.list.slice(0, 8).map(d => d.main.temp_max));
+      const low = Math.min(...data.list.slice(0, 8).map(d => d.main.temp_min));
+
+      setWeather({
+        temp: Math.round(current.main.temp),
+        condition: current.weather[0].main,
+        high: Math.round(high),
+        low: Math.round(low),
+      });
+
+      // Extract hourly forecast
+      const hourly = data.list.slice(0, 6).map((item) => ({
+        time: new Date(item.dt * 1000).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        }),
+        condition: item.weather[0].main,
+        temp: Math.round(item.main.temp),
+      }));
+
+      setHourlyForecast(hourly);
+      console.log("✅ Weather widget loaded for:", name);
+    } catch (err) {
+      console.error("❌ Weather fetch error:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initialize: Try geolocation, fallback to Navi Mumbai
+  useEffect(() => {
+    const initializeWeather = async () => {
+      console.log("🌤️ Initializing weather widget...");
+      const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+      
+      if (!apiKey) {
+        console.error("❌ VITE_WEATHER_API_KEY is not set!");
+        console.error("   Add to .env.local: VITE_WEATHER_API_KEY=your_key_here");
+        setError("API key not configured");
+        setLoading(false);
+        return;
+      }
+      
+      console.log("✅ API Key detected (length:", apiKey.length, ")");
+
+      if (navigator.geolocation) {
+        console.log("📍 Requesting geolocation...");
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log("✅ Geolocation granted:", position.coords);
+            fetchWeatherByCoordinates(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+          },
+          (err) => {
+            console.log("⚠️ Geolocation denied/failed:", err.message);
+            // Geolocation denied or failed, use default city
+            fetchWeatherByCity("Navi Mumbai");
+          }
+        );
+      } else {
+        console.log("⚠️ Geolocation not available, using default city");
+        // Geolocation not available, use default city
+        fetchWeatherByCity("Navi Mumbai");
+      }
+    };
+
+    initializeWeather();
+
+    // Refresh weather every 30 minutes
+    const interval = setInterval(initializeWeather, 30 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 text-gray-100 w-64 shadow-lg border border-white/20 animate-pulse">
+        <div className="h-5 bg-gray-400/30 rounded w-24 mb-3" />
+        <div className="h-12 bg-gray-400/30 rounded w-20 mb-2" />
+        <div className="h-4 bg-gray-400/30 rounded w-16 mb-4" />
+        <div className="grid grid-cols-6 gap-2">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-8 bg-gray-400/30 rounded" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state with fallback
+  if (error && !weather) {
+    return (
+      <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 text-gray-100 w-64 shadow-lg border border-white/20">
+        <h3 className="text-sm font-semibold mb-2">Weather</h3>
+        <p className="text-xs text-gray-400">Unable to fetch weather data</p>
+      </div>
+    );
+  }
+
+  // Render weather widget with real data
   return (
     <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 text-gray-100 w-64 shadow-lg border border-white/20">
-      <h3 className="text-sm font-semibold mb-3">Navi Mumbai</h3>
+      <h3 className="text-sm font-semibold mb-3">{city}</h3>
       
       <div className="flex items-start justify-between mb-4">
         <div>
-          <div className="text-4xl font-bold">19°</div>
-          <p className="text-xs text-gray-300">Clear</p>
-          <p className="text-xs text-gray-400 mt-1">H:33° L:15°</p>
+          <div className="text-4xl font-bold">{weather?.temp ?? "—"}°</div>
+          <p className="text-xs text-gray-300">{weather?.condition ?? "—"}</p>
+          <p className="text-xs text-gray-400 mt-1">H:{weather?.high ?? "—"}° L:{weather?.low ?? "—"}°</p>
         </div>
-        <Sun className="w-12 h-12 text-yellow-300" />
+        {getWeatherIcon(weather?.condition)}
       </div>
 
       <div className="grid grid-cols-6 gap-2 text-xs text-center">
-        {["12 AM", "1 AM", "2 AM", "3 AM", "4 AM", "5 AM"].map((time, i) => (
-          <div key={time} className="space-y-1">
-            <div className="text-gray-400">{time}</div>
-            <Cloud className="w-4 h-4 mx-auto opacity-70" />
-            <div className="text-gray-300 text-xs">{19 - i}°</div>
-          </div>
-        ))}
+        {hourlyForecast.length > 0 ? (
+          hourlyForecast.map((hour, i) => (
+            <div key={i} className="space-y-1">
+              <div className="text-gray-400">{hour.time}</div>
+              {getSmallWeatherIcon(hour.condition)}
+              <div className="text-gray-300 text-xs">{hour.temp}°</div>
+            </div>
+          ))
+        ) : (
+          [...Array(6)].map((_, i) => (
+            <div key={i} className="space-y-1">
+              <div className="text-gray-400">—</div>
+              <Cloud className="w-4 h-4 mx-auto opacity-70" />
+              <div className="text-gray-300 text-xs">—°</div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

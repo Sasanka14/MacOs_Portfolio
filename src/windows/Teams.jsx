@@ -76,18 +76,18 @@ const Teams = () => {
         <Search className="icon" />
       </div>
 
-      <div className="bg-white flex h-full flex-col">
+      <div className="bg-white dark:bg-gray-900 flex h-full flex-col">
         {/* Breadcrumb Navigation */}
         {isInMemberView && (
-          <div className="border-b border-gray-200 px-4 py-2 flex items-center gap-2">
+          <div className="border-b border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center gap-2">
             <button
               onClick={() => setCurrentView(null)}
-              className="text-blue-500 hover:text-blue-700 text-sm font-medium"
+              className="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
             >
               Teams
             </button>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-700 text-sm font-medium">{currentView?.name}</span>
+            <span className="text-gray-400 dark:text-gray-600">/</span>
+            <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">{currentView?.name}</span>
           </div>
         )}
 
@@ -98,14 +98,14 @@ const Teams = () => {
               <div
                 key={item.id}
                 onClick={() => openItem(item)}
-                className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+                className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer transition-colors"
               >
                 <img
                   src={item.icon}
                   alt={item.name}
                   className="w-16 h-16 object-cover rounded-lg shadow-sm"
                 />
-                <p className="text-center text-sm font-medium truncate max-w-full">
+                <p className="text-center text-sm font-medium truncate max-w-full dark:text-gray-300">
                   {item.name}
                 </p>
               </div>
@@ -113,7 +113,7 @@ const Teams = () => {
           </div>
 
           {displayItems?.length === 0 && (
-            <div className="flex items-center justify-center h-full text-gray-400">
+            <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-600">
               <p>No items to display</p>
             </div>
           )}
