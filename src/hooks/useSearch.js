@@ -5,7 +5,6 @@ import { dockApps, navLinks, locations } from '#constants';
 const useSearch = () => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scope, setScope] = useState(null); // Track search scope
 
   // Helper: Recursively build folder/file index with paths
   const buildFileIndex = useCallback(() => {
@@ -252,7 +251,7 @@ const useSearch = () => {
       const q = parsed.originalQuery.toLowerCase();
 
       // Check for calculation - only allow digits, operators, decimal point, spaces, and parentheses
-      const calcMatch = query.match(/^[\d\s\+\-\*\/\(\)\.]+$/);
+      const calcMatch = query.match(/^[\d\s+\-*/()\\.]+$/);
       if (calcMatch) {
         try {
           // Use expr-eval for safe arithmetic evaluation
