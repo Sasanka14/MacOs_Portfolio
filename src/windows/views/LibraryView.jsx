@@ -39,7 +39,7 @@ const LibraryView = ({ images = [] }) => {
 
   if (images.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500">
+      <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400">
         <p>No images in this library</p>
       </div>
     );
@@ -57,30 +57,30 @@ const LibraryView = ({ images = [] }) => {
               tabIndex={0}
               onClick={() => handleImageClick(image)}
               onKeyDown={(e) => handleKeyDown(e, image)}
-              className="group relative aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+              className="group relative aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-1 dark:focus:ring-offset-gray-900"
               aria-label={`Open ${image.location || `photo ${image.id}`}`}
             >
               <img
                 src={image.img}
                 alt={image.location || `Photo ${image.id}`}
-                className="w-full h-full object-cover group-hover:brightness-90 transition-all duration-200"
+                className="w-full h-full object-cover group-hover:brightness-90 dark:group-hover:brightness-110 transition-all duration-200"
               />
               <button
                 onClick={(e) => toggleFavorite(e, image.id)}
                 onKeyDown={(e) => handleFavoriteKeyDown(e, image.id)}
                 aria-label={favorites.includes(image.id) ? 'Remove from favorites' : 'Add to favorites'}
                 aria-pressed={favorites.includes(image.id)}
-                className="absolute top-2 right-2 p-2 bg-white/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="absolute top-2 right-2 p-2 bg-white/80 dark:bg-gray-800/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400"
               >
                 <Heart
                   className={`w-4 h-4 ${
                     favorites.includes(image.id)
                       ? 'fill-red-500 text-red-500'
-                      : 'text-gray-600'
+                      : 'text-gray-600 dark:text-gray-300'
                   }`}
                 />
               </button>
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 dark:group-hover:bg-white/5 transition-colors duration-200" />
             </div>
           ))}
         </div>
@@ -96,30 +96,30 @@ const LibraryView = ({ images = [] }) => {
               tabIndex={0}
               onClick={() => handleImageClick(image)}
               onKeyDown={(e) => handleKeyDown(e, image)}
-              className="group relative aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+              className="group relative aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md dark:hover:shadow-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-offset-1 dark:focus:ring-offset-gray-900"
               aria-label={`Open ${image.location || `photo ${image.id}`}`}
             >
               <img
                 src={image.img}
                 alt={image.location || `Photo ${image.id}`}
-                className="w-full h-full object-cover group-hover:brightness-90 transition-all duration-200"
+                className="w-full h-full object-cover group-hover:brightness-90 dark:group-hover:brightness-110 transition-all duration-200"
               />
               <button
                 onClick={(e) => toggleFavorite(e, image.id)}
                 onKeyDown={(e) => handleFavoriteKeyDown(e, image.id)}
                 aria-label={favorites.includes(image.id) ? 'Remove from favorites' : 'Add to favorites'}
                 aria-pressed={favorites.includes(image.id)}
-                className="absolute top-2 right-2 p-1 bg-white/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="absolute top-2 right-2 p-1 bg-white/80 dark:bg-gray-800/80 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-400"
               >
                 <Heart
                   className={`w-3 h-3 ${
                     favorites.includes(image.id)
                       ? 'fill-red-500 text-red-500'
-                      : 'text-gray-600'
+                      : 'text-gray-600 dark:text-gray-300'
                   }`}
                 />
               </button>
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 dark:group-hover:bg-white/5 transition-colors duration-200" />
             </div>
           ))}
         </div>

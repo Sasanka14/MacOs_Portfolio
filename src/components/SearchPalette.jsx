@@ -19,26 +19,20 @@ const SearchPalette = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  // Handle keyboard shortcuts
+  // Handle Escape key to close palette
   useEffect(() => {
-    const handleGlobalKeyDown = (e) => {
-      // ⌘ + Space to toggle
-      if ((e.metaKey || e.ctrlKey) && e.code === 'Space') {
-        e.preventDefault();
-        onClose();
-      }
-      // Esc to close
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
         onClose();
       }
     };
 
     if (isOpen) {
-      window.addEventListener('keydown', handleGlobalKeyDown);
+      window.addEventListener('keydown', handleKeyDown);
     }
 
     return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
 
@@ -123,7 +117,7 @@ const SearchPalette = ({ isOpen, onClose }) => {
     } else if (result.type === 'calculation') {
       return <span className="text-sm font-semibold">=</span>;
     } else if (result.type === 'app' && result.icon) {
-      return <img src={`/public/${result.icon}`} alt="" className="w-5 h-5" />;
+      return <img src={`/${result.icon}`} alt="" className="w-5 h-5" />;
     }
     return <Search className="w-4 h-4 opacity-50" />;
   };

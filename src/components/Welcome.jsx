@@ -126,6 +126,10 @@ const WeatherWidget = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [city, setCity] = useState("Navi Mumbai");
+  const [retryCount, setRetryCount] = useState(0);
+  const [retryDelay, setRetryDelay] = useState(1000);
+  const maxRetries = 3;
+  const maxRetryDelay = 30000; // 30 seconds max delay
 
   // Map OpenWeatherMap condition codes to Lucide icons
   const getWeatherIcon = (condition) => {
@@ -217,11 +221,32 @@ const WeatherWidget = () => {
       setHourlyForecast(hourly);
       setCity(data.city.name);
       console.log("✅ Weather widget loaded for:", data.city.name);
+      
+      // Reset retry counters on successful fetch
+      setRetryCount(0);
+      setRetryDelay(1000);
     } catch (err) {
       console.error("❌ Weather fetch error:", err);
       setError(err.message);
-      // Fallback to default city
-      fetchWeatherByCity("Navi Mumbai");
+      
+      // Implement retry logic with exponential backoff
+      if (retryCount < maxRetries) {
+        const newRetryCount = retryCount + 1;
+        const newDelay = Math.min(retryDelay * 2, maxRetryDelay);
+        
+        console.log(`⏳ Retry ${newRetryCount}/${maxRetries} in ${newDelay}ms...`);
+        setRetryCount(newRetryCount);
+        setRetryDelay(newDelay);
+        
+        // Schedule retry with exponential backoff
+        setTimeout(() => {
+          fetchWeatherByCoordinates(lat, lon);
+        }, newDelay);
+      } else {
+        // Max retries reached, fall back to default city
+        console.log("❌ Max retries reached, falling back to default city");
+        fetchWeatherByCity("Navi Mumbai");
+      }
     } finally {
       setLoading(false);
     }
@@ -299,9 +324,31 @@ const WeatherWidget = () => {
 
       setHourlyForecast(hourly);
       console.log("✅ Weather widget loaded for:", name);
+      
+      // Reset retry counters on successful fetch
+      setRetryCount(0);
+      setRetryDelay(1000);
     } catch (err) {
       console.error("❌ Weather fetch error:", err);
       setError(err.message);
+      
+      // Implement retry logic with exponential backoff (NO circular call to coordinates)
+      if (retryCount < maxRetries) {
+        const newRetryCount = retryCount + 1;
+        const newDelay = Math.min(retryDelay * 2, maxRetryDelay);
+        
+        console.log(`⏳ Retry ${newRetryCount}/${maxRetries} in ${newDelay}ms...`);
+        setRetryCount(newRetryCount);
+        setRetryDelay(newDelay);
+        
+        // Schedule retry with exponential backoff
+        setTimeout(() => {
+          fetchWeatherByCity(cityName);
+        }, newDelay);
+      } else {
+        // Max retries reached - stop attempting
+        console.log("❌ Max retries reached for city fetch. Weather updates paused until next manual refresh or app restart.");
+      }
     } finally {
       setLoading(false);
     }
@@ -310,6 +357,12 @@ const WeatherWidget = () => {
   // Initialize: Try geolocation, fallback to Navi Mumbai
   useEffect(() => {
     const initializeWeather = async () => {
+      // Skip initialization if max retries already reached
+      if (retryCount >= maxRetries && error) {
+        console.log("⏸️ Weather updates paused - max retries reached");
+        return;
+      }
+
       console.log("🌤️ Initializing weather widget...");
       const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
       
@@ -348,10 +401,15 @@ const WeatherWidget = () => {
 
     initializeWeather();
 
-    // Refresh weather every 30 minutes
-    const interval = setInterval(initializeWeather, 30 * 60 * 1000);
+    // Refresh weather every 30 minutes (only if retries haven't been exhausted)
+    const interval = setInterval(() => {
+      if (retryCount < maxRetries || !error) {
+        initializeWeather();
+      }
+    }, 30 * 60 * 1000);
+    
     return () => clearInterval(interval);
-  }, []);
+  }, [retryCount, error, maxRetries]);
 
   // Show loading state
   if (loading) {

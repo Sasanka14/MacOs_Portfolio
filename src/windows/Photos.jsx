@@ -90,10 +90,21 @@ const Photos = () => {
 
     // Apply sorting
     if (sortBy === "name") {
-      result.sort((a, b) => a.id - b.id);
+      // Sort by image filename lexicographically (deterministic)
+      result.sort((a, b) => {
+        const nameA = a.img.split('/').pop().toLowerCase();
+        const nameB = b.img.split('/').pop().toLowerCase();
+        const nameCompare = nameA.localeCompare(nameB);
+        // Fall back to id comparison if names are equal
+        return nameCompare !== 0 ? nameCompare : a.id - b.id;
+      });
     } else if (sortBy === "size") {
-      // Random sort for demo
-      result.sort(() => Math.random() - 0.5);
+      // Sort by id as proxy for size (deterministic, not random)
+      result.sort((a, b) => {
+        const sizeCompare = a.id - b.id;
+        // Fall back to id if already equal (redundant here but consistent)
+        return sizeCompare !== 0 ? sizeCompare : a.id - b.id;
+      });
     }
 
     return result;
@@ -223,12 +234,21 @@ const Photos = () => {
         {filteredGallery.map((image) => (
           <div
             key={image.id}
+            role="button"
+            tabIndex={0}
             onClick={() => handleImageClick(image)}
-            className="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors duration-150"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleImageClick(image);
+              }
+            }}
+            className="group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label={`Gallery image ${image.id}`}
           >
             <img
               src={image.img}
-              alt={`Gallery ${image.id}`}
+              alt={`Gallery image ${image.id}`}
               className="w-16 h-16 object-cover rounded border border-gray-200"
             />
             <div className="flex-1 min-w-0">
@@ -237,7 +257,8 @@ const Photos = () => {
             </div>
             <button
               onClick={(e) => toggleFavorite(e, image.id)}
-              className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+              aria-label={favorites.includes(image.id) ? `Remove image ${image.id} from favorites` : `Add image ${image.id} to favorites`}
+              className="p-2 hover:bg-gray-200 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
             >
               <Heart
                 className={`w-4 h-4 ${
@@ -266,17 +287,27 @@ const Photos = () => {
       <div className="p-6 flex flex-col items-center justify-center h-full">
         {filteredGallery.length > 0 && (
           <div
+            role="button"
+            tabIndex={0}
             onClick={() => handleImageClick(filteredGallery[0])}
-            className="group relative w-full max-w-md aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleImageClick(filteredGallery[0]);
+              }
+            }}
+            className="group relative w-full max-w-md aspect-square rounded-lg overflow-hidden cursor-pointer bg-gray-100 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label={`Gallery image ${filteredGallery[0].id}`}
           >
             <img
               src={filteredGallery[0].img}
-              alt={`Gallery ${filteredGallery[0].id}`}
+              alt={`Gallery image ${filteredGallery[0].id}`}
               className="w-full h-full object-cover"
             />
             <button
               onClick={(e) => toggleFavorite(e, filteredGallery[0].id)}
-              className="absolute top-4 right-4 p-3 bg-white/80 rounded-full"
+              aria-label={favorites.includes(filteredGallery[0].id) ? `Remove image ${filteredGallery[0].id} from favorites` : `Add image ${filteredGallery[0].id} to favorites`}
+              className="absolute top-4 right-4 p-3 bg-white/80 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500"
             >
               <Heart
                 className={`w-5 h-5 ${

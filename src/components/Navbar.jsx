@@ -31,19 +31,6 @@ const Navbar = ({ onSearchOpen }) => {
     openWindow(type);
   };
 
-  // Handle ⌘ + Space to toggle search palette
-  useEffect(() => {
-    const handleGlobalKeyDown = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.code === 'Space') {
-        e.preventDefault();
-        onSearchOpen();
-      }
-    };
-
-    window.addEventListener('keydown', handleGlobalKeyDown);
-    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
-  }, [onSearchOpen]);
-
   return (
     <nav>
         {/* Left Side */}
