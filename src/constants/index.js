@@ -93,31 +93,16 @@ const dockApps = [
     name: "Teams",
     icon: "team.png",
     canOpen: true,
-  }
+  },
 ];
 
 const blogPosts = [
   {
     id: 1,
     date: "Sep 2, 2025",
-    title:
-      "TypeScript Exfigmaed: What It Is, Why It Matters, and How to Master It",
-    image: "/images/blog1.png",
-    link: "https://jsmastery.com/blog/typescript-exfigmaed-what-it-is-why-it-matters-and-how-to-master-it",
-  },
-  {
-    id: 2,
-    date: "Aug 28, 2025",
-    title: "The Ultimate Guide to Mastering Three.js for 3D Development",
-    image: "/images/blog2.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-three-js-for-3d-development",
-  },
-  {
-    id: 3,
-    date: "Aug 15, 2025",
-    title: "The Ultimate Guide to Mastering GSAP Animations",
-    image: "/images/blog3.png",
-    link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-gsap-animations",
+    title: "Advancing Data Security with AES Encryption and Decryption",
+    image: "/images/blog1.jpg",
+    link: "https://insightforgedotcom.wordpress.com/2024/11/29/advancing-data-security-with-aes-encryption-and-decryption/",
   },
 ];
 
@@ -210,19 +195,19 @@ const photosLinks = [
 const gallery = [
   {
     id: 1,
-    img: "/images/gal1.png",
+    img: "/images/sasanka.jpg",
   },
   {
     id: 2,
-    img: "/images/gal2.png",
+    img: "/images/sasanka1.jpg",
   },
   {
     id: 3,
-    img: "/images/gal3.png",
+    img: "/images/sasanka2.jpeg",
   },
   {
     id: 4,
-    img: "/images/gal4.png",
+    img: "/images/sasanka3.jpeg",
   },
 ];
 
@@ -247,7 +232,7 @@ const WORK_LOCATION = {
     // ▶ Project 1
     {
       id: 5,
-      name: "Nike Ecommerce Website Application",
+      name: "AgriNext - AI Powered Crop Analysis",
       icon: "/images/folder.png",
       kind: "folder",
       position: "top-10 left-5", // icon position inside Finder
@@ -255,35 +240,35 @@ const WORK_LOCATION = {
       children: [
         {
           id: 1,
-          name: "Nike Project.txt",
+          name: "AgriNext_Project.txt",
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
           position: "top-5 left-10",
           description: [
-            "The Nike eCommerce website is a sleek and modern platform designed for shopping the latest Nike collections.",
-            "Instead of a simple online store, it delivers an immersive experience with bold visuals, interactive product displays, and smooth navigation.",
-            "Think of it like walking into a flagship Nike store—but right from your phone or laptop.",
-            "It's built with Next.js and Tailwind, ensuring fast performance, responsive design, and a clean, premium look.",
+            "AgriNext is a farmer-first agri-tech platform designed to rebuild trust and sustainability in modern agriculture.",
+            "Instead of being just an advisory app, it focuses on real farmer problems—crop decisions, disease awareness, and actionable insights rooted in local context.",
+            "Think of it as a digital companion for farmers, guiding them from uncertainty to informed decisions, season after season.",
+            "It is designed with a product-thinking mindset, combining clean UI, data-driven insights, and scalable technology to create long-term impact in agriculture.",
           ],
         },
         {
           id: 2,
-          name: "nike.com",
+          name: "agrinext.streamlit.app",
           icon: "/images/safari.png",
           kind: "file",
           fileType: "url",
-          href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
+          href: "https://agrinext.streamlit.app/",
           position: "top-10 right-20",
         },
         {
           id: 4,
-          name: "nike.png",
+          name: "agrinext.png",
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
           position: "top-52 right-80",
-          imageUrl: "/images/project-1.png",
+          imageUrl: "/images/AgriNext.png",
         },
         {
           id: 5,
@@ -300,7 +285,7 @@ const WORK_LOCATION = {
     // ▶ Project 2
     {
       id: 6,
-      name: "AI Resume Analyzer",
+      name: "IndianOdyssey",
       icon: "/images/folder.png",
       kind: "folder",
       position: "top-52 right-80",
@@ -308,35 +293,35 @@ const WORK_LOCATION = {
       children: [
         {
           id: 1,
-          name: "AI Resume Analyzer Project.txt",
+          name: "IndianOdyssey_Project.txt",
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
           position: "top-5 right-10",
           description: [
-            "AI Resume Analyzer is a smart tool that helps you perfect your resume with instant feedback.",
-            "Instead of guessing what recruiters want, you get AI-powered insights on keywords, formatting, and overall impact.",
-            "Think of it like having a career coach—pointing out strengths, fixing weaknesses, and boosting your chances of landing interviews.",
-            "It's built with Next.js and Tailwind, so it runs fast, looks professional, and works seamlessly on any device.",
+            "IndianOdyssey is a modern travel website designed to showcase India’s diverse destinations and curated tour experiences.",
+            "Instead of a plain listing platform, it focuses on inspiring travel through immersive visuals, clear itineraries, and intuitive navigation.",
+            "Think of it as a digital travel brochure—guiding users from curiosity to confident trip planning across India’s most iconic locations.",
+            "It is built using HTML, CSS, Bootstrap, and JavaScript, delivering a responsive, visually engaging, and user-friendly experience across devices.",
           ],
         },
         {
           id: 2,
-          name: "ai-resume-analyzer.com",
+          name: "sasanka14.github.io",
           icon: "/images/safari.png",
           kind: "file",
           fileType: "url",
-          href: "https://youtu.be/iYOz165wGkQ?si=R1hs8Legl200m0Cl",
+          href: "https://sasanka14.github.io/Travel-Website-Using-Bootstrap/",
           position: "top-20 left-20",
         },
         {
           id: 4,
-          name: "ai-resume-analyzer.png",
+          name: "indianodyssey.png",
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
           position: "top-52 left-80",
-          imageUrl: "/images/project-2.png",
+          imageUrl: "/images/indianodyssey.png",
         },
         {
           id: 5,
@@ -353,7 +338,7 @@ const WORK_LOCATION = {
     // ▶ Project 3
     {
       id: 7,
-      name: "Food Delivery App",
+      name: "Insuramate",
       icon: "/images/folder.png",
       kind: "folder",
       position: "top-10 left-80",
@@ -361,35 +346,35 @@ const WORK_LOCATION = {
       children: [
         {
           id: 1,
-          name: "Food Delivery App Project.txt",
+          name: "Insuramate_Project.txt",
           icon: "/images/txt.png",
           kind: "file",
           fileType: "txt",
           position: "top-5 left-10",
           description: [
-            "Our Food Delivery App is a fast and convenient way to order meals from your favorite restaurants.",
-            "Instead of making calls or waiting in line, you can browse menus, customize orders, and track deliveries in real time.",
-            "Think of it like having your favorite restaurants in your pocket—ready to deliver anytime, anywhere.",
-            "It’s built with React Native, so it works smoothly on both iOS and Android with a clean, modern design.",
+            "Insuramate is an innovative insurance management platform designed to simplify policy administration and claims processing.",
+            "Instead of dealing with complex paperwork, users can easily manage their insurance policies, submit claims, and track their status online.",
+            "Think of it as your personal insurance assistant—streamlining communication between policyholders and providers for a hassle-free experience.",
+            "It’s built with React Native, ensuring a seamless and intuitive interface on both iOS and Android devices.",
           ],
         },
         {
           id: 2,
-          name: "food-delivery-app.com",
+          name: "insuramate.netlify.app",
           icon: "/images/safari.png",
           kind: "file",
           fileType: "url",
-          href: "https://youtu.be/LKrX390fJMw?si=cExkuVhf2DTV9G2-",
+          href: "https://insuramate.netlify.app/",
           position: "top-10 right-20",
         },
         {
           id: 4,
-          name: "food-delivery-app.png",
+          name: "insuramate.png",
           icon: "/images/image.png",
           kind: "file",
           fileType: "img",
           position: "top-52 right-80",
-          imageUrl: "/images/project-3.png",
+          imageUrl: "/images/insuramate.png",
         },
         {
           id: 5,
@@ -500,9 +485,9 @@ const ARCHIVE_LOCATION = {
           description: [
             "This research explores AI-based traffic optimization systems and their real-world applications.",
             "The paper focuses on real-time congestion detection using machine learning algorithms.",
-            "Experiments show a 23% improvement in traffic flow efficiency with reduced emissions."
+            "Experiments show a 23% improvement in traffic flow efficiency with reduced emissions.",
           ],
-          position: "top-6 left-8"
+          position: "top-6 left-8",
         },
         {
           id: 2,
@@ -510,7 +495,7 @@ const ARCHIVE_LOCATION = {
           kind: "file",
           fileType: "pdf",
           icon: "/images/pdf.png",
-          position: "top-16 left-48"
+          position: "top-16 left-48",
         },
         {
           id: 3,
@@ -519,7 +504,7 @@ const ARCHIVE_LOCATION = {
           fileType: "img",
           icon: "/images/image.png",
           imageUrl: "/images/research-architecture.png",
-          position: "top-44 left-24"
+          position: "top-44 left-24",
         },
         {
           id: 4,
@@ -528,9 +513,9 @@ const ARCHIVE_LOCATION = {
           fileType: "url",
           icon: "/images/safari.png",
           href: "https://arxiv.org",
-          position: "top-60 left-56"
-        }
-      ]
+          position: "top-60 left-56",
+        },
+      ],
     },
     {
       id: 102,
@@ -549,9 +534,9 @@ const ARCHIVE_LOCATION = {
           description: [
             "A comprehensive study on transformer architectures for natural language processing.",
             "Covers BERT, GPT, and emerging attention mechanisms in modern NLP systems.",
-            "Performance benchmarks across multiple datasets demonstrate state-of-the-art results."
+            "Performance benchmarks across multiple datasets demonstrate state-of-the-art results.",
           ],
-          position: "top-6 left-8"
+          position: "top-6 left-8",
         },
         {
           id: 2,
@@ -559,10 +544,10 @@ const ARCHIVE_LOCATION = {
           kind: "file",
           fileType: "pdf",
           icon: "/images/pdf.png",
-          position: "top-16 left-48"
-        }
-      ]
-    }
+          position: "top-16 left-48",
+        },
+      ],
+    },
   ],
 };
 
@@ -573,59 +558,6 @@ const TEAMS_LOCATION = {
   icon: "/icons/teams.svg",
   kind: "folder",
   children: [
-    // Team Member 1: Purba Das
-    {
-      id: 201,
-      name: "Purba Das",
-      icon: "/images/folder.png",
-      kind: "folder",
-      position: "top-10 left-5",
-      windowPosition: "top-[8vh] left-8",
-      children: [
-        {
-          id: 202,
-          name: "about-me.txt",
-          icon: "/images/txt.png",
-          kind: "file",
-          fileType: "txt",
-          position: "top-5 left-10",
-          subtitle: "Undergraduate Law Student (LLB)",
-          image: "/images/purba.jpg",
-          description: [
-            "Hello! I'm Purba Das — an undergraduate law student pursuing LLB.",
-            "I have a strong interest in legal research, constitutional law, and case analysis.",
-            "I enjoy academic writing, critical reasoning, and participating in discussions related to law and justice."
-          ]
-        },
-        {
-          id: 203,
-          name: "Purba-Resume.pdf",
-          icon: "/images/pdf.png",
-          kind: "file",
-          fileType: "pdf",
-          position: "top-16 left-48",
-          href: "/files/purba-das-resume.pdf"
-        },
-        {
-          id: 204,
-          name: "profile-1.png",
-          icon: "/images/image.png",
-          kind: "file",
-          fileType: "img",
-          position: "top-44 left-80",
-          imageUrl: "/images/purba-1.png"
-        },
-        {
-          id: 205,
-          name: "socials.webloc",
-          icon: "/images/safari.png",
-          kind: "file",
-          fileType: "url",
-          position: "top-60 right-20",
-          href: "https://linkedin.com"
-        }
-      ]
-    },
     // Team Member 2: Krishna
     {
       id: 301,
@@ -642,31 +574,31 @@ const TEAMS_LOCATION = {
           kind: "file",
           fileType: "txt",
           position: "top-5 right-10",
-          subtitle: "Student (Class 11)",
-          image: "/images/krishna.jpg",
+          subtitle: "Video Editor | Creative Storyteller",
+          image: "/images/krishna.jpeg",
           description: [
-            "Hi, I'm Krishna — a student currently studying in Class 11.",
-            "I'm interested in learning new technologies, exploring creative ideas, and building strong academic foundations.",
-            "I enjoy experimenting with projects, watching educational content, and improving my skills step by step."
-          ]
+            "Hi, I’m Krishna — a Class 11 student with a strong interest in video editing and visual storytelling.",
+            "I focus on creating engaging videos by working with cuts, transitions, effects, color grading, and sound design.",
+            "I enjoy experimenting with creative projects, learning new editing techniques, and improving my skills step by step.",
+          ],
         },
         {
           id: 303,
-          name: "school-project.png",
-          icon: "/images/image.png",
+          name: "Sample1.mp4",
+          icon: "/images/video.png",
           kind: "file",
-          fileType: "img",
+          fileType: "video",
           position: "top-16 left-48",
-          imageUrl: "/images/krishna-project.png"
+          href: "/videos/Uchia-clan-&-Naruto-[AMV]-Remake.mp4",
         },
         {
           id: 304,
-          name: "intro-video.mp4",
+          name: "Sample2.mp4",
           icon: "/images/video.png",
           kind: "file",
           fileType: "video",
           position: "top-44 right-80",
-          href: "/videos/krishna-intro.mp4"
+          href: "/videos/Vyuk-bhai-[lookism series].mp4",
         },
         {
           id: 305,
@@ -675,11 +607,11 @@ const TEAMS_LOCATION = {
           kind: "file",
           fileType: "url",
           position: "top-60 left-5",
-          href: "https://instagram.com"
-        }
-      ]
-    }
-  ]
+          href: "https://www.instagram.com/k.e.n.editz/",
+        },
+      ],
+    },
+  ],
 };
 
 export const locations = {
@@ -762,7 +694,11 @@ const quickActions = [
   { icon: "location", label: "Location", value: "India" },
   { icon: "status", label: "Status", value: "Available for collaboration" },
   { icon: "time", label: "Response Time", value: "Within 24 hours" },
-  { icon: "work", label: "Open To", value: "Internships · Freelance · Full-time" },
+  {
+    icon: "work",
+    label: "Open To",
+    value: "Internships · Freelance · Full-time",
+  },
 ];
 
 export { INITIAL_Z_INDEX, WINDOW_CONFIG, quickActions };
