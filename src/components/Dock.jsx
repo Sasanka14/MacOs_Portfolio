@@ -7,7 +7,7 @@ import React, { useRef, useCallback } from "react";
 import { Tooltip } from "react-tooltip";
 
 const Dock = () => {
-  const { openWindow, closeWindow, minimizeWindow, focusWindow, windows } = useWindowStore();
+  const { openWindow, closeWindow, focusWindow, windows } = useWindowStore();
   const { setActiveLocation } = useLocationStore();
   const dockRef = useRef(null);
 
@@ -65,7 +65,7 @@ const Dock = () => {
       // If you need the latest state immediately use:
       // console.log(useWindowStore.getState().windows);
     },
-    [windows, openWindow, closeWindow, minimizeWindow, focusWindow, setActiveLocation]
+    [windows, openWindow, closeWindow, focusWindow, setActiveLocation]
   );
 
   useGSAP(() => {

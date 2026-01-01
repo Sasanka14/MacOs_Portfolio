@@ -13,12 +13,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const Resume = () => {
-  const [numPages, setNumPages] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const handleLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
+  const handleLoadSuccess = () => {
     setLoading(false);
     setError(null);
   };

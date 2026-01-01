@@ -20,7 +20,7 @@ const Text = () => {
         <h2>{name}</h2>
       </div>
 
-      <div className="bg-white p-5 space-y-6">
+      <div className="bg-white dark:bg-gray-900 p-5 space-y-6">
         {image && (
           <div className="w-full">
             <img 
@@ -32,13 +32,13 @@ const Text = () => {
         )}
 
         {subtitle && (
-          <h3 className="text-lg font-semibold">{subtitle}</h3>
+          <h3 className="text-lg font-semibold dark:text-gray-100">{subtitle}</h3>
         )}
 
         {description && Array.isArray(description) && (
           <div className="space-y-4">
             {description.map((paragraph, index) => (
-              <p key={index} className="text-gray-700 leading-relaxed space-y-3 text-base">
+              <p key={index} className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-3 text-base">
                 {paragraph}
               </p>
             ))}

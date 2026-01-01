@@ -5,6 +5,31 @@
     <link rel="icon" type="image/svg+xml" href="/macbook.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SasankaWrites | Portfolio </title>
+    
+    <!-- Theme initialization script - prevents flash of wrong theme -->
+    <script>
+      (function() {
+        try {
+          const theme = localStorage.getItem('theme') || 'system';
+          let shouldBeDark = false;
+          
+          if (theme === 'dark') {
+            shouldBeDark = true;
+          } else if (theme === 'system') {
+            shouldBeDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+          
+          if (shouldBeDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {
+          // Fallback if localStorage is unavailable
+          console.error('Theme initialization error:', e);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
