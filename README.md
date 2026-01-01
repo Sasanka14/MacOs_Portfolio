@@ -364,18 +364,18 @@ This project is built on the shoulders of exceptional open-source tools, librari
 - **Dark Mode:** Native dark mode support across all components
 - **Responsive:** Mobile-friendly design with breakpoint-based layouts
 
-### Key Features Implemented
-✅ Draggable window system with minimize/maximize/close controls
-✅ Global search palette (⌘ + Space) with scoped search
-✅ Unified search index (apps, folders, files, commands, calculations)
-✅ Dark/light theme toggle with system preference detection
-✅ Keyboard navigation throughout (arrow keys, Enter, Space, Escape)
-✅ Image gallery with multiple view modes (grid, list, carousel)
-✅ Rich text editing and document preview
-✅ PDF rendering and display
-✅ Weather widget with real-time API integration
-✅ Calendar and date utilities
-✅ Accessible UI with ARIA labels and semantic HTML
+### ✨ Key Features
+- Draggable window system with minimize, maximize, and close controls  
+- Global search palette (`⌘ + Space`) with scoped search support  
+- Unified search across apps, folders, files, commands, and calculations  
+- Dark / light theme toggle with system preference detection  
+- Full keyboard navigation (Arrow keys, Enter, Space, Escape)  
+- Image gallery with grid, list, and carousel view modes  
+- Rich text editing with document preview  
+- Built-in PDF rendering and viewing  
+- Real-time weather widget using live API data  
+- Calendar and date utilities  
+- Accessible UI with ARIA labels and semantic HTML  
 
 ---
 
@@ -463,13 +463,12 @@ This project is built on the shoulders of exceptional open-source tools, librari
 The following screenshots and demonstrations represent **Version 1** of this project.
 
 ### User Interface Highlights
-- **Taskbar & Window System:** Draggable windows with minimize/maximize/close controls
-- **Global Search:** Command-palette style search (⌘ + Space)
-- **Gallery View:** Image browsing with grid, list, and carousel modes
-- **Weather Widget:** Real-time weather display with hourly forecast
-- **Calendar Integration:** Date picker and scheduling interface
-- **Text Editor:** Rich text editing with document management
-- **Dark Mode:** Full dark theme with proper contrast ratios
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/49c42248-86b8-45f7-b184-490ab7adae75" width="48%" />
+  <img src="https://github.com/user-attachments/assets/3c665c8b-af48-4b40-8a26-b3047921b1f9" width="48%" />
+</p>
+
+
 
 ### Important Notes
 - UI and features will evolve significantly in v2 and v3
