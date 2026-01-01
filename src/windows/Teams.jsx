@@ -4,7 +4,6 @@ import React from "react";
 import windowWrapper from "#hoc/WindowWrapper";
 import { locations, WINDOW_CONFIG } from "#constants";
 import useWindowStore from "#store/window";
-import clsx from "clsx";
 
 const Teams = () => {
   const { openWindow } = useWindowStore();
@@ -123,4 +122,5 @@ const Teams = () => {
   );
 };
 
-export default windowWrapper(Teams, "teams");
+const WrappedTeams = windowWrapper(Teams, "teams");
+export default WrappedTeams;

@@ -27,9 +27,6 @@ const Safari = () => {
   const [hoveredBlogId, setHoveredBlogId] = useState(null);
   const searchInputRef = useRef(null);
   const postsPerPage = 3;
-  
-  // Get Safari window state from store
-  const safariWindow = useWindowStore((state) => state.windows?.safari);
 
   // Extract unique tags from blogs
   const allTags = useMemo(() => {
@@ -61,6 +58,7 @@ const Safari = () => {
 
   // Reset to first page when filters change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1);
   }, [query, selectedTags, sortBy]);
 
