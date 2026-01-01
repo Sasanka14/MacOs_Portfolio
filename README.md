@@ -2,7 +2,7 @@
 
 A modern, keyboard-first productivity application inspired by macOS Spotlight and system-level design patterns. Built with React, Vite, and Tailwind CSS.
 
-**[Live Demo](#)** • **[GitHub](https://github.com/Sasanka14/MacOs_Portfolio)** • **[Portfolio](#)**
+**[Live Demo](https://sasankawrites.in/)** • **[GitHub](https://github.com/Sasanka14/MacOs_Portfolio)** • **[Portfolio](#)**
 
 ---
 
