@@ -87,6 +87,9 @@ A modern, keyboard-first productivity application inspired by macOS Spotlight an
 git clone https://github.com/Sasanka14/MacOs_Portfolio.git
 cd MacOs_Portfolio
 
+# Navigate to frontend folder
+cd frontend
+
 # Install dependencies
 npm install
 
@@ -106,7 +109,7 @@ npm run lint
 The application will start at `http://localhost:5173`
 
 ### Initial Setup
-1. Set `VITE_WEATHER_API_KEY` in `.env.local` for weather functionality:
+1. Set `VITE_WEATHER_API_KEY` in `frontend/.env.local` for weather functionality:
    ```
    VITE_WEATHER_API_KEY=your_openweathermap_api_key_here
    ```
@@ -140,42 +143,65 @@ The application will start at `http://localhost:5173`
 ## 📦 Project Structure
 
 ```
-portfolio/
-├── src/
-│   ├── components/          # Reusable React components
-│   │   ├── Navbar.jsx      # Top navigation bar
-│   │   ├── Dock.jsx        # Bottom taskbar
-│   │   ├── Welcome.jsx     # Hero section + weather
-│   │   ├── SearchPalette.jsx # Global search interface
-│   │   └── ...
-│   ├── windows/             # Window components (draggable windows)
-│   │   ├── Photos.jsx      # Image gallery
-│   │   ├── Text.jsx        # Text editor
-│   │   ├── Safari.jsx      # Browser simulation
-│   │   ├── Terminal.jsx    # Terminal simulation
-│   │   └── ...
-│   ├── views/              # Reusable view components
-│   │   └── LibraryView.jsx # Keyboard-accessible image library
-│   ├── hooks/              # Custom React hooks
-│   │   ├── useSearch.js    # Search logic and indexing
-│   │   ├── useTheme.js     # Theme management
-│   │   └── useWindowStore.js
-│   ├── store/              # Zustand state stores
-│   │   ├── window.js       # Window state management
-│   │   └── location.js     # Navigation state
-│   ├── hoc/               # Higher-order components
-│   │   └── WindowWrapper.jsx # Window container
-│   ├── constants/         # App configuration
-│   ├── styles/           # Global styles
-│   ├── index.css         # Tailwind + global styles
-│   ├── main.jsx          # React entry point
-│   └── App.jsx           # Root component
-├── public/               # Static assets
-├── package.json          # Dependencies and scripts
-├── vite.config.js        # Vite configuration
-├── tailwind.config.js    # Tailwind configuration
-└── README.md            # This file
+portfolio/                          # Root directory
+├── frontend/                        # React application (Vite)
+│   ├── src/
+│   │   ├── components/             # Reusable React components (10 files)
+│   │   │   ├── Navbar.jsx         # Top navigation bar
+│   │   │   ├── Dock.jsx           # Bottom taskbar
+│   │   │   ├── Welcome.jsx        # Hero section + weather widget
+│   │   │   ├── SearchPalette.jsx  # Global search interface
+│   │   │   ├── WindowControls.jsx # Window control buttons
+│   │   │   └── ...
+│   │   ├── windows/                # Window components (11 files)
+│   │   │   ├── Photos.jsx         # Image & video gallery
+│   │   │   ├── Text.jsx           # Text editor
+│   │   │   ├── Safari.jsx         # Browser simulation
+│   │   │   ├── Terminal.jsx       # Terminal simulation
+│   │   │   ├── Finder.jsx         # File browser
+│   │   │   ├── Resume.jsx         # Resume viewer
+│   │   │   ├── Teams.jsx          # Team members showcase
+│   │   │   ├── Contact.jsx        # Contact form
+│   │   │   └── views/             # View components
+│   │   │       └── LibraryView.jsx # Keyboard-accessible library
+│   │   ├── hooks/                  # Custom React hooks (2 files)
+│   │   │   ├── useSearch.js       # Search logic and indexing
+│   │   │   └── useTheme.js        # Theme management
+│   │   ├── store/                  # Zustand state management (2 files)
+│   │   │   ├── window.js          # Window state management
+│   │   │   └── location.js        # Navigation state
+│   │   ├── hoc/                    # Higher-order components (1 file)
+│   │   │   └── WindowWrapper.jsx  # Window container wrapper
+│   │   ├── constants/              # App configuration (1 file)
+│   │   │   └── index.js           # All data, locations, configs
+│   │   ├── index.css               # Global styles + Tailwind
+│   │   ├── main.jsx                # React entry point
+│   │   └── App.jsx                 # Root component
+│   ├── public/                      # Static assets
+│   │   ├── icons/                 # SVG and PNG icons
+│   │   ├── images/                # Portfolio images
+│   │   ├── videos/                # Video files
+│   │   ├── files/                 # Document files
+│   │   └── macbook.png            # Hero image
+│   ├── package.json                # Dependencies and scripts
+│   ├── vite.config.js              # Vite build configuration
+│   ├── eslint.config.js            # ESLint configuration
+│   ├── jsconfig.json               # JavaScript configuration
+│   ├── index.html                  # HTML entry point
+│   ├── .env.local                  # Environment variables (local)
+│   ├── .gitignore                  # Git ignore rules
+│   └── node_modules/               # Dependencies (auto-generated)
+├── .git/                            # Git version control
+├── README.md                        # This file - Complete documentation
+└── .gitignore                       # Root git ignore rules
 ```
+
+### Folder Structure Explanation
+
+**Frontend Monorepo Setup:**
+- All source code lives in `frontend/` folder
+- Enables future backend addition in separate `backend/` folder
+- Each folder is independent and can be deployed separately
 
 ## 📖 Key Concepts
 
