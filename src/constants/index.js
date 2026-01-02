@@ -13,13 +13,13 @@ const navLinks = [
     id: 3,
     name: "Blog",
     type: "blog",
-    href: "https://yourblog.com",
+    href: "https://sasanka14.github.io/MERN-Stack-Blog-Website/",
   },
   {
     id: 4,
     name: "Notes",
     type: "notes",
-    href: "https://yournotes.com",
+    href: "https://sasanka14.github.io/Apple-Notes/",
   },
   {
     id: 5,
@@ -146,7 +146,7 @@ const socials = [
     text: "Blog",
     icon: "/icons/atom.svg",
     bg: "#4bcb63",
-    link: "https://myblog.com",
+    link: "https://sasanka14.github.io/MERN-Stack-Blog-Website/",
   },
   {
     id: 3,
