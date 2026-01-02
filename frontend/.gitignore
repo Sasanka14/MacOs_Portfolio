@@ -1,4 +1,35 @@
+# ===============================
+# OS / System
+# ===============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# ===============================
+# Vite / Build cache
+# ===============================
+.vite
+**/.vite
+
+# ===============================
+# Dependencies
+# ===============================
+node_modules
+**/node_modules
+
+# ===============================
+# Build outputs
+# ===============================
+dist
+dist-ssr
+**/dist
+**/dist-ssr
+
+# ===============================
 # Logs
+# ===============================
 logs
 *.log
 npm-debug.log*
@@ -7,23 +38,26 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Environment variables
+# ===============================
+# Environment files
+# ===============================
 .env
 .env.local
 .env.*.local
 
-# Editor directories and files
+# ===============================
+# Editor / IDE
+# ===============================
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# ===============================
+# Vercel
+# ===============================
+.vercel
