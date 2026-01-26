@@ -1,0 +1,1010 @@
+@import url("https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700;800;900&family=SF+Pro+Text:wght@100;200;300;400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #000;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+@theme {
+  --font-sf-pro: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --color-ios-blue: #007AFF;
+  --color-ios-green: #34C759;
+  --color-ios-red: #FF3B30;
+  --color-ios-yellow: #FFCC00;
+  --color-ios-orange: #FF9500;
+  --color-ios-pink: #FF2D55;
+  --color-ios-purple: #AF52DE;
+  --color-ios-teal: #5AC8FA;
+  --color-ios-gray: #8E8E93;
+  --color-ios-gray-2: #636366;
+  --color-ios-gray-3: #48484A;
+  --color-ios-gray-4: #3A3A3C;
+  --color-ios-gray-5: #2C2C2E;
+  --color-ios-gray-6: #1C1C1E;
+}
+
+/* iOS-style utilities */
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility ios-blur {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+@utility ios-blur-light {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, 0.72);
+}
+
+@utility ios-blur-dark {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(30, 30, 30, 0.72);
+}
+
+/* Status Bar */
+.status-bar {
+  @apply fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 h-12;
+  padding-top: var(--safe-area-top);
+}
+
+.status-bar-time {
+  @apply text-sm font-semibold text-white;
+}
+
+.status-bar-icons {
+  @apply flex items-center gap-1;
+}
+
+/* Dynamic Island */
+.dynamic-island {
+  @apply absolute top-3 left-1/2 -translate-x-1/2 bg-black rounded-full;
+  width: 126px;
+  height: 37px;
+}
+
+/* Lock Screen */
+.lock-screen {
+  @apply fixed inset-0 flex flex-col items-center text-white;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+}
+
+.lock-screen-time {
+  @apply text-8xl font-light tracking-tight mt-32;
+  font-feature-settings: "tnum";
+}
+
+.lock-screen-date {
+  @apply text-xl font-medium mt-2;
+}
+
+.lock-screen-unlock {
+  @apply absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2;
+}
+
+/* iOS 17 Lock Screen Styles */
+.lock-screen-ios {
+  @apply fixed inset-0 flex flex-col text-white;
+  padding-top: calc(var(--safe-area-top) + 60px);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.lock-date {
+  @apply text-lg font-medium text-white/90 text-center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.lock-time-container {
+  @apply flex justify-center mt-1 mb-auto;
+}
+
+.lock-time {
+  @apply flex items-baseline;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
+
+.lock-time-digit {
+  font-size: clamp(80px, 22vw, 120px);
+  font-weight: 200;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(255, 255, 255, 0.1);
+  /* Depth effect - semi-transparent for wallpaper bleed */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lock-time-colon {
+  font-size: clamp(70px, 18vw, 100px);
+  font-weight: 200;
+  line-height: 1;
+  margin: 0 -4px;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Lock Screen Widgets */
+.lock-widgets {
+  @apply px-4 space-y-3 mb-4;
+}
+
+/* Now Playing Widget */
+.now-playing-widget {
+  @apply rounded-3xl p-4;
+  background: rgba(120, 120, 130, 0.35);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.now-playing-header {
+  @apply flex items-center gap-3 mb-3;
+}
+
+.now-playing-artwork {
+  @apply w-12 h-12 rounded-xl overflow-hidden flex-shrink-0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.now-playing-info {
+  @apply flex-1 min-w-0;
+}
+
+.now-playing-title {
+  @apply text-white font-semibold text-base truncate;
+}
+
+.now-playing-artist {
+  @apply text-white/70 text-sm truncate;
+}
+
+.now-playing-waveform {
+  @apply flex items-end gap-0.5 h-6;
+}
+
+.waveform-bar {
+  @apply w-1 bg-white/80 rounded-full;
+  animation: waveform 0.8s ease-in-out infinite alternate;
+}
+
+.waveform-bar:nth-child(1) { animation-delay: 0s; }
+.waveform-bar:nth-child(2) { animation-delay: 0.2s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.4s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes waveform {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1); }
+}
+
+.now-playing-progress {
+  @apply flex items-center gap-3 mb-3;
+}
+
+.progress-time {
+  @apply text-xs text-white/60 w-10;
+  font-feature-settings: "tnum";
+}
+
+.progress-time:last-child {
+  @apply text-right;
+}
+
+.progress-bar {
+  @apply flex-1 h-1 bg-white/20 rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full bg-white/80 rounded-full;
+}
+
+.now-playing-controls {
+  @apply flex items-center justify-center gap-6;
+}
+
+.control-btn {
+  @apply p-2 transition-transform active:scale-90;
+}
+
+/* Bottom Widgets */
+.lock-bottom-widgets {
+  @apply flex gap-3;
+}
+
+.battery-widget {
+  @apply flex-1 rounded-2xl p-3;
+  background: rgba(120, 120, 130, 0.35);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.battery-icon {
+  @apply flex items-center gap-2 mb-1;
+}
+
+.battery-percent {
+  @apply text-white font-semibold text-sm;
+}
+
+.battery-device {
+  @apply text-white/60 text-xs mb-2 truncate;
+}
+
+.battery-bar {
+  @apply h-1.5 bg-white/20 rounded-full overflow-hidden;
+}
+
+.battery-fill {
+  @apply h-full bg-[#34C759] rounded-full;
+}
+
+.quick-widget {
+  @apply w-16 h-16 rounded-2xl flex flex-col items-center justify-center gap-1;
+  background: rgba(120, 120, 130, 0.35);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s;
+}
+
+.quick-widget:active {
+  transform: scale(0.95);
+}
+
+.quick-widget-label {
+  @apply text-[10px] text-white/70;
+}
+
+/* Bottom Actions */
+.lock-bottom-actions {
+  @apply flex items-center justify-between px-10 pb-2;
+  padding-bottom: calc(var(--safe-area-bottom) + 8px);
+}
+
+.lock-action-btn {
+  @apply w-12 h-12 rounded-full flex-center transition-transform active:scale-90;
+  background: rgba(50, 50, 55, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.home-indicator {
+  @apply w-36 h-1.5 bg-white/80 rounded-full;
+}
+
+/* Home Screen */
+.home-screen {
+  @apply fixed inset-0 pt-14 pb-24;
+  padding-top: calc(var(--safe-area-top) + 56px);
+  padding-bottom: calc(var(--safe-area-bottom) + 96px);
+}
+
+/* iOS Home Screen with Widgets */
+.home-screen-ios {
+  @apply fixed inset-0 flex flex-col;
+  padding-top: calc(var(--safe-area-top) + 50px);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+/* Swipeable Pages Container */
+.home-pages-container {
+  @apply flex-1 overflow-hidden;
+}
+
+.home-pages {
+  @apply flex h-full transition-transform duration-300 ease-out;
+}
+
+.home-page {
+  @apply flex-shrink-0 w-full h-full;
+}
+
+.home-content {
+  @apply h-full overflow-y-auto px-4 pt-4 pb-4;
+}
+
+/* Widget Rows */
+.widget-row {
+  @apply flex gap-3 mb-3;
+}
+
+/* Calendar Widget */
+.calendar-widget {
+  @apply flex rounded-3xl p-4 flex-1;
+  background: rgba(180, 170, 150, 0.25);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar-left {
+  @apply flex flex-col items-center justify-center pr-4 border-r border-white/20;
+}
+
+.calendar-day-name {
+  @apply text-white/80 text-sm font-medium tracking-wider;
+}
+
+.calendar-day-number {
+  @apply text-white text-5xl font-light leading-none mt-1;
+}
+
+.calendar-right {
+  @apply flex-1 pl-4;
+}
+
+.calendar-month {
+  @apply text-white/80 text-xs font-medium tracking-wider text-right mb-2;
+}
+
+.calendar-header {
+  @apply grid grid-cols-7 gap-1 mb-1;
+}
+
+.calendar-header-day {
+  @apply text-white/60 text-[10px] text-center font-medium;
+}
+
+.calendar-grid {
+  @apply grid grid-cols-7 gap-1;
+}
+
+.calendar-day {
+  @apply text-white/80 text-[10px] text-center py-0.5;
+}
+
+.calendar-today {
+  @apply bg-white/90 text-black rounded font-semibold;
+}
+
+.calendar-empty {
+  @apply invisible;
+}
+
+/* Photo Widget (Large) */
+.photo-widget {
+  @apply relative rounded-3xl overflow-hidden;
+  width: 140px;
+  height: 140px;
+  background: rgba(180, 170, 150, 0.25);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.photo-widget-img {
+  @apply w-full h-full object-cover;
+  filter: sepia(20%) brightness(0.9);
+}
+
+.photo-widget-label {
+  @apply absolute bottom-2 left-0 right-0 text-center text-white text-xs font-medium;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* 2x2 App Grid */
+.app-grid-2x2 {
+  @apply grid grid-cols-2 gap-3 flex-1;
+}
+
+.app-icon-medium {
+  @apply flex flex-col items-center gap-1;
+}
+
+.app-icon-medium-inner {
+  @apply w-14 h-14 rounded-2xl flex-center overflow-hidden;
+  background: rgba(180, 170, 150, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-icon-medium-inner img {
+  @apply w-8 h-8 object-contain;
+}
+
+.app-icon-medium span {
+  @apply text-white text-[10px] text-center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.invert-icon {
+  filter: invert(1);
+}
+
+/* Small App Column */
+.app-column-small {
+  @apply flex flex-col gap-3;
+}
+
+.app-icon-small {
+  @apply flex flex-col items-center gap-1;
+}
+
+.app-icon-small-inner {
+  @apply w-14 h-14 rounded-2xl flex-center overflow-hidden;
+  background: rgba(180, 170, 150, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-icon-small-inner img {
+  @apply w-8 h-8 object-contain;
+}
+
+.app-icon-small span {
+  @apply text-white text-[10px] text-center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Music Widget */
+.music-widget {
+  @apply flex-1 rounded-3xl p-3 relative overflow-hidden;
+  background: rgba(180, 170, 150, 0.25);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.music-widget-content {
+  @apply flex gap-3;
+}
+
+.music-widget-art {
+  @apply w-20 h-20 rounded-xl object-cover;
+  filter: sepia(20%) brightness(0.9);
+}
+
+.music-widget-info {
+  @apply flex-1 flex flex-col justify-center;
+}
+
+.music-widget-title {
+  @apply text-white font-semibold text-sm;
+}
+
+.music-widget-artist {
+  @apply text-white/70 text-xs mb-2;
+}
+
+.music-widget-wave {
+  @apply flex items-end gap-0.5 h-4;
+}
+
+.music-widget-wave span {
+  @apply w-1 bg-white/60 rounded-full;
+  animation: musicWave 0.6s ease-in-out infinite alternate;
+}
+
+.music-widget-wave span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.music-widget-wave span:nth-child(2) { height: 100%; animation-delay: 0.15s; }
+.music-widget-wave span:nth-child(3) { height: 60%; animation-delay: 0.3s; }
+.music-widget-wave span:nth-child(4) { height: 80%; animation-delay: 0.45s; }
+
+@keyframes musicWave {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1); }
+}
+
+.music-widget-icon {
+  @apply absolute top-3 right-3 w-6 h-6;
+}
+
+.music-widget-icon img {
+  @apply w-full h-full;
+}
+
+.music-widget-link {
+  @apply absolute bottom-2 left-0 right-0 text-center text-white/80 text-xs font-medium;
+}
+
+/* Social Row */
+.social-row {
+  @apply justify-center gap-4 mt-2;
+}
+
+.social-icon-btn {
+  @apply w-12 h-12 rounded-2xl flex-center transition-transform active:scale-90;
+  background: rgba(180, 170, 150, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icon-btn img {
+  @apply w-6 h-6;
+}
+
+/* Home Search Bar */
+.home-search {
+  @apply px-16 py-2;
+}
+
+.home-search-bar {
+  @apply flex items-center justify-center gap-2 py-2 px-4 rounded-full;
+  background: rgba(120, 120, 130, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.home-search-bar span {
+  @apply text-white/50 text-sm;
+}
+
+/* Page 2 Widgets */
+
+/* Reminder Widget */
+.reminder-widget {
+  @apply flex-1 rounded-3xl p-4 relative;
+  background: rgba(245, 245, 240, 0.9);
+}
+
+.reminder-icon {
+  @apply w-10 h-10 rounded-xl flex-center mb-2;
+  background: rgba(200, 180, 150, 0.3);
+}
+
+.reminder-checkbox {
+  @apply absolute top-4 right-4 w-6 h-6 rounded-full border-2 border-gray-300;
+}
+
+.reminder-time {
+  @apply text-gray-600 text-xs;
+}
+
+.reminder-duration {
+  @apply text-gray-400 text-xs;
+}
+
+.reminder-title {
+  @apply text-gray-900 font-semibold text-lg mt-1;
+}
+
+/* Weather Widget */
+.weather-widget {
+  @apply flex-1 rounded-3xl p-4;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+.weather-location {
+  @apply flex items-center gap-1 text-white/80 text-xs mb-1;
+}
+
+.weather-temp {
+  @apply text-white text-4xl font-light;
+}
+
+.weather-details {
+  @apply flex items-center gap-1 text-white/80 text-sm mt-2;
+}
+
+.weather-range {
+  @apply text-white/60 text-xs mt-1;
+}
+
+/* Schedule Widget */
+.schedule-widget {
+  @apply flex-1 rounded-3xl p-4 flex;
+  background: rgba(245, 245, 240, 0.9);
+}
+
+.schedule-left {
+  @apply flex flex-col items-center justify-center pr-4 border-r border-gray-200;
+}
+
+.schedule-day {
+  @apply text-gray-500 text-sm font-medium;
+}
+
+.schedule-date {
+  @apply text-gray-900 text-4xl font-light;
+}
+
+.schedule-right {
+  @apply flex-1 pl-4;
+}
+
+.schedule-label {
+  @apply text-gray-500 text-xs font-medium tracking-wider mb-2;
+}
+
+.schedule-item {
+  @apply pl-3 py-1 mb-1 border-l-4;
+  background: rgba(139, 154, 125, 0.2);
+  border-radius: 0 8px 8px 0;
+}
+
+.schedule-item-title {
+  @apply text-gray-700 text-sm font-medium;
+}
+
+.schedule-item-time {
+  @apply text-gray-500 text-xs;
+}
+
+/* Battery Widget Large */
+.battery-widget-large {
+  @apply flex-1 rounded-3xl p-4 flex justify-around items-center;
+  background: rgba(245, 245, 240, 0.9);
+}
+
+.battery-device {
+  @apply flex flex-col items-center gap-2;
+}
+
+.battery-ring {
+  @apply relative w-14 h-14;
+}
+
+.battery-ring-svg {
+  @apply w-full h-full transform -rotate-90;
+}
+
+.battery-ring-bg {
+  fill: none;
+  stroke: #e5e5e5;
+  stroke-width: 3;
+}
+
+.battery-ring-fill {
+  fill: none;
+  stroke: #34C759;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.battery-device-icon {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-gray-600;
+}
+
+.battery-charging {
+  @apply absolute -top-1 -right-1 text-xs;
+}
+
+.battery-device-percent {
+  @apply text-gray-900 text-sm font-medium;
+}
+
+/* Activity Widget */
+.activity-widget {
+  @apply flex-1 rounded-3xl p-4 relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+}
+
+.activity-icon {
+  @apply absolute top-3 left-3;
+}
+
+.activity-rings {
+  @apply relative w-16 h-16 mx-auto mt-4;
+}
+
+.activity-ring {
+  @apply absolute inset-0;
+}
+
+.activity-ring circle {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.activity-ring.red circle {
+  stroke: #FF3B30;
+  stroke-dasharray: 75 100;
+}
+
+.activity-ring.green circle {
+  stroke: #34C759;
+  stroke-dasharray: 50 100;
+}
+
+.activity-ring.blue circle {
+  stroke: #007AFF;
+  stroke-dasharray: 100 100;
+}
+
+.activity-stats {
+  @apply mt-3 space-y-0.5;
+}
+
+.activity-stats p {
+  @apply text-white/80 text-xs;
+}
+
+/* Stats Widget */
+.stats-widget {
+  @apply flex-1 rounded-3xl p-4;
+  background: rgba(245, 245, 240, 0.9);
+}
+
+.stats-header {
+  @apply flex items-center gap-2 mb-3;
+}
+
+.stats-value {
+  @apply text-gray-900 font-semibold text-lg;
+}
+
+.stats-time {
+  @apply text-gray-500 text-xs ml-auto;
+}
+
+.stats-chart {
+  @apply flex items-end gap-2 h-16 mb-2;
+}
+
+.stats-bar {
+  @apply flex-1 bg-blue-200 rounded-t;
+  min-height: 10%;
+}
+
+.stats-bar.active {
+  @apply bg-blue-500;
+}
+
+.stats-labels {
+  @apply flex justify-between text-[8px] text-gray-400;
+}
+
+.app-grid {
+  @apply grid grid-cols-4 gap-x-4 gap-y-6 px-6;
+}
+
+.app-icon-container {
+  @apply flex flex-col items-center gap-1;
+}
+
+.app-icon {
+  @apply w-16 h-16 rounded-2xl shadow-lg flex-center overflow-hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-icon img {
+  @apply w-full h-full object-cover;
+}
+
+.app-label {
+  @apply text-xs text-white text-center truncate w-full;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Dock */
+.ios-dock {
+  @apply fixed bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-4 px-4 py-2 rounded-3xl;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding-bottom: calc(var(--safe-area-bottom) + 8px);
+}
+
+.dock-icon {
+  @apply w-14 h-14 rounded-xl shadow-lg overflow-hidden;
+}
+
+.dock-icon img {
+  @apply w-full h-full object-cover;
+}
+
+/* App Screens */
+.app-screen {
+  @apply fixed inset-0 bg-black/95 overflow-hidden;
+  padding-top: var(--safe-area-top);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.app-header {
+  @apply flex items-center justify-between px-4 py-3 ios-blur-dark;
+}
+
+.app-header-title {
+  @apply text-lg font-semibold text-white;
+}
+
+.app-back-button {
+  @apply flex items-center gap-1 text-[--color-ios-blue];
+}
+
+.app-content {
+  @apply flex-1 overflow-y-auto;
+}
+
+/* iOS List Style */
+.ios-list {
+  @apply mx-4 rounded-xl overflow-hidden;
+  background: rgba(28, 28, 30, 0.8);
+}
+
+.ios-list-item {
+  @apply flex items-center justify-between px-4 py-3 border-b border-white/10;
+}
+
+.ios-list-item:last-child {
+  @apply border-b-0;
+}
+
+.ios-list-item-icon {
+  @apply w-8 h-8 rounded-lg flex-center mr-3;
+}
+
+.ios-list-item-content {
+  @apply flex-1;
+}
+
+.ios-list-item-title {
+  @apply text-white text-base;
+}
+
+.ios-list-item-subtitle {
+  @apply text-[--color-ios-gray] text-sm;
+}
+
+.ios-list-item-chevron {
+  @apply text-[--color-ios-gray] text-xl;
+}
+
+/* iOS Card Style */
+.ios-card {
+  @apply mx-4 rounded-2xl overflow-hidden;
+  background: rgba(28, 28, 30, 0.8);
+}
+
+/* Page Indicator */
+.page-indicator {
+  @apply flex items-center justify-center gap-2 py-3;
+}
+
+.page-dot {
+  @apply w-2 h-2 rounded-full bg-white/30 transition-all duration-300 cursor-pointer;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.page-dot:hover {
+  @apply bg-white/50;
+}
+
+.page-dot.active {
+  @apply bg-white w-6;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Control Center */
+.control-center {
+  @apply fixed inset-x-2 top-16 rounded-3xl p-4 ios-blur-dark;
+  max-height: 70vh;
+}
+
+.control-grid {
+  @apply grid grid-cols-2 gap-3;
+}
+
+.control-tile {
+  @apply rounded-2xl p-4 flex flex-col gap-2;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.control-tile-large {
+  @apply col-span-2;
+}
+
+.control-slider {
+  @apply w-full h-40 rounded-2xl overflow-hidden relative;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Swipe Animations */
+@keyframes swipeUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-swipe-up {
+  animation: swipeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Notification Style */
+.notification {
+  @apply mx-4 rounded-2xl p-4 ios-blur-dark flex items-start gap-3;
+}
+
+.notification-icon {
+  @apply w-10 h-10 rounded-xl overflow-hidden;
+}
+
+.notification-content {
+  @apply flex-1;
+}
+
+.notification-app {
+  @apply text-xs text-[--color-ios-gray] uppercase tracking-wide;
+}
+
+.notification-title {
+  @apply text-white font-semibold;
+}
+
+.notification-body {
+  @apply text-white/80 text-sm;
+}
+
+/* Scrollbar hide */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
