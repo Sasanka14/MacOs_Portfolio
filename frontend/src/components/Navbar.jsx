@@ -42,8 +42,8 @@ const Navbar = ({ onSearchOpen }) => {
         <p className="font-bold">
           <a
             href="https://sasankawrites.in/"
-            target="_self"
-            rel="noopener"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-bold hover:underline cursor-pointer"
           >
             SasankaWrites
