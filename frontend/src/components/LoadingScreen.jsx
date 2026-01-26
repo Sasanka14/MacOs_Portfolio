@@ -333,7 +333,7 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
         {particlesData.map((particle, i) => (
           <div
             key={i}
-            ref={el => particlesRef.current[i] = el}
+            ref={(el) => { particlesRef.current[i] = el; }}
             className="absolute rounded-full bg-white/5"
             style={{
               width: particle.width + 'px',
