@@ -1,5 +1,4 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Parser } from 'expr-eval';
 import { dockApps, navLinks, locations } from '#constants';
 
 const useSearch = () => {
@@ -249,31 +248,6 @@ const useSearch = () => {
     } else {
       // Global search
       const q = parsed.originalQuery.toLowerCase();
-
-      // Check for calculation - only allow digits, operators, decimal point, spaces, and parentheses
-      const calcMatch = query.match(/^[\d\s+\-*/()\\.]+$/);
-      if (calcMatch) {
-        try {
-          // Use expr-eval for safe arithmetic evaluation
-          const parser = new Parser();
-          const expr = parser.parse(query);
-          const result = expr.evaluate();
-          
-          // Verify result is a valid finite number
-          if (typeof result === 'number' && isFinite(result)) {
-            scopedResults.push({
-              id: 'calc-result',
-              type: 'calculation',
-              label: `${result}`,
-              description: `${query} = ${result}`,
-              value: result,
-            });
-          }
-        } catch (e) {
-          // Invalid calculation expression, ignore silently
-          console.debug('Calculation parse error:', e.message);
-        }
-      }
 
       // Filter globally
       const filtered = searchIndex.filter((item) => {

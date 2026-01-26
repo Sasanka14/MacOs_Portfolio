@@ -136,7 +136,6 @@ The application will start at `http://localhost:5173`
 
 ### Utilities
 - **Day.js** — Lightweight date formatting
-- **expr-eval** — Safe arithmetic expression evaluation
 - **Immer** — Immutable state updates
 - **clsx** — className utility
 
@@ -344,7 +343,6 @@ This project is built on the shoulders of exceptional open-source tools, librari
 ### State Management & Data
 - **[Zustand](https://zustand.docs.pmnd.rs)** (v5.0.8) — Lightweight state management library with minimal boilerplate
 - **[Immer](https://immerjs.github.io/immer)** (v11.0.0) — Immutable state management utilities for simplified updates
-- **[expr-eval](https://github.com/silentmatt/expr-eval)** (latest) — Safe arithmetic expression parser and evaluator
 
 ### Animation & Interaction
 - **[GSAP](https://gsap.com)** (v3.13.0) — Professional animation library for smooth, performant interactions

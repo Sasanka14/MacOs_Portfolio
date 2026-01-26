@@ -46,7 +46,7 @@ html.dark body {
   }
 
   nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
+    @apply flex justify-between items-center bg-white/30 backdrop-blur-3xl p-2 px-5 select-none;
 
     div {
       @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
@@ -81,11 +81,11 @@ html.dark body {
     }
 
     /* Navbar icons visibility in dark mode */
-    ul li img {
+    img {
       filter: brightness(0) invert(1);
     }
 
-    ul li img:hover {
+    img:hover {
       filter: brightness(0) invert(1) brightness(1.2);
     }
   }
