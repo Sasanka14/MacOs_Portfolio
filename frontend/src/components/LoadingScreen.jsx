@@ -45,6 +45,20 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
   const loadStartTimeRef = useRef(Date.now());
 
   /**
+   * Effect: Resets component state when isLoading becomes true again.
+   * Allows the loading screen to reappear after being dismissed.
+   */
+  useEffect(() => {
+    if (isLoading) {
+      setIsVisible(true);
+      setFadeOut(false);
+      setLoadProgress(0);
+      setFontsReady(false);
+      loadStartTimeRef.current = Date.now();
+    }
+  }, [isLoading]);
+
+  /**
    * Memoized particle configuration data.
    * Generates random positions, sizes, and animation timings for background particles.
    * @type {Array<{width: number, height: number, left: number, top: number, animationDuration: number, animationDelay: number}>}
