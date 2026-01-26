@@ -1,24 +1,54 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import gsap from 'gsap';
 
+/**
+ * A macOS-style loading screen component with animated logo, branding, and progress indicator.
+ * Features smooth GSAP animations, particle effects, and real-time loading progress tracking.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {boolean} [props.isLoading=true] - Controls whether the loading screen is active
+ * @param {Function} [props.onLoadingComplete] - Callback fired when loading completes and exit animation finishes
+ * @returns {JSX.Element|null} The loading screen overlay or null when not visible
+ * 
+ * @example
+ * <LoadingScreen 
+ *   isLoading={isAppLoading} 
+ *   onLoadingComplete={() => console.log('Ready!')} 
+ * />
+ */
 export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
   const [isVisible, setIsVisible] = useState(isLoading);
   const [fadeOut, setFadeOut] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [fontsReady, setFontsReady] = useState(false);
   
+  /** @type {React.RefObject<HTMLDivElement>} Reference to the main container element */
   const containerRef = useRef(null);
+  /** @type {React.RefObject<HTMLDivElement>} Reference to the logo container element */
   const logoRef = useRef(null);
+  /** @type {React.RefObject<HTMLDivElement>} Reference to the logo glow effect element */
   const logoGlowRef = useRef(null);
+  /** @type {React.RefObject<HTMLSpanElement>} Reference to the X brand text element */
   const xRef = useRef(null);
+  /** @type {React.RefObject<HTMLSpanElement>} Reference to the sasankaWrites brand text element */
   const brandTextRef = useRef(null);
+  /** @type {React.RefObject<HTMLDivElement>} Reference to the progress bar container */
   const progressBarRef = useRef(null);
+  /** @type {React.RefObject<HTMLDivElement>} Reference to the progress bar fill element */
   const progressFillRef = useRef(null);
+  /** @type {React.RefObject<HTMLParagraphElement>} Reference to the status text element */
   const statusTextRef = useRef(null);
+  /** @type {React.RefObject<HTMLDivElement[]>} Reference array for particle elements */
   const particlesRef = useRef([]);
+  /** @type {React.RefObject<number>} Timestamp when loading started */
   const loadStartTimeRef = useRef(Date.now());
 
-  // Memoize particle data to prevent re-generation on every render
+  /**
+   * Memoized particle configuration data.
+   * Generates random positions, sizes, and animation timings for background particles.
+   * @type {Array<{width: number, height: number, left: number, top: number, animationDuration: number, animationDelay: number}>}
+   */
   const particlesData = useMemo(() => 
     Array.from({ length: 20 }).map(() => ({
       width: Math.random() * 4 + 2,
@@ -29,10 +59,17 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
       animationDelay: Math.random() * 10,
     })), []);
 
-  // Track font loading readiness
+  /**
+   * Effect: Tracks font loading readiness using the Font Loading API.
+   * Sets fontsReady state to true when all fonts are loaded or if API is unsupported.
+   */
   useEffect(() => {
     let isMounted = true;
 
+    /**
+     * Asynchronously checks if document fonts are loaded.
+     * @async
+     */
     const checkFonts = async () => {
       try {
         if (document.fonts?.ready) {
@@ -60,8 +97,15 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
     };
   }, []);
 
-  // Track asset loading readiness
+  /**
+   * Effect: Tracks overall asset loading progress.
+   * Monitors JS readiness, font loading, and image completion to calculate progress percentage.
+   */
   useEffect(() => {
+    /**
+     * Calculates and updates the current loading progress based on various indicators.
+     * @returns {boolean} True if loading is complete (progress > 95% and JS ready)
+     */
     const updateLoadProgress = () => {
       const indicators = {
         jsReady: document.readyState === 'complete' || document.readyState === 'interactive',
@@ -97,7 +141,10 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
     };
   }, [fontsReady]);
 
-  // Main animation sequence
+  /**
+   * Effect: Main GSAP animation sequence for the loading screen.
+   * Handles logo entrance, brand text reveal, and continuous floating/glow animations.
+   */
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -187,7 +234,10 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
     };
   }, []);
 
-  // Progress bar animation
+  /**
+   * Effect: Animates the progress bar fill based on current load progress.
+   * Updates the scaleX transform to reflect loading percentage.
+   */
   useEffect(() => {
     if (progressFillRef.current) {
       gsap.to(progressFillRef.current, {
@@ -198,9 +248,15 @@ export default function LoadingScreen({ isLoading = true, onLoadingComplete }) {
     }
   }, [loadProgress]);
 
-  // Handle loading completion
+  /**
+   * Effect: Handles the loading completion and exit animation sequence.
+   * Triggers fade-out animations when loading is complete and progress exceeds 95%.
+   * Calls onLoadingComplete callback after exit animation finishes.
+   */
   useEffect(() => {
+    /** @type {number|undefined} Timer ID for the fade delay */
     let fadeTimer;
+    /** @type {gsap.core.Timeline|undefined} GSAP timeline for exit animations */
     let exitTl;
 
     if (!isLoading && loadProgress > 95) {
