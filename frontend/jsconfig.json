@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#components/*": ["src/components/*"],
+      "#windows/*": ["src/windows/*"],
+      "#hoc/*": ["src/hoc/*"],
+      "#hooks/*": ["src/hooks/*"],
+      "#constants/*": ["src/constants/*"],
+      "#store/*": ["src/store/*"],
+
+      "#shared/*": ["src/shared/*"],
+      "#shared/constants/*": ["src/shared/constants/*"],
+      "#shared/store/*": ["src/shared/store/*"]
+    }
+  },
+  "include": ["src"]
+}
