@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, Moon, Monitor } from 'lucide-react';
-import useTheme from "../hooks/useTheme";
+import useTheme from "../../../hooks/useTheme";
 
 const ThemeMenu = () => {
   const [isOpen, setIsOpen] = useState(false);

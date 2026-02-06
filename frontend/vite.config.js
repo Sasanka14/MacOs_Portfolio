@@ -10,11 +10,13 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      // existing aliases (keep)
-      "#components": resolve(root, "src/components"),
-      "#hoc": resolve(root, "src/hoc"),
+      // existing aliases (updated for new structure)
+      "#components": resolve(root, "src/app/desktop/components"),
+      "#hoc": resolve(root, "src/app/desktop/hoc"),
       "#hooks": resolve(root, "src/hooks"),
-      "#windows": resolve(root, "src/windows"),
+      "#windows": resolve(root, "src/app/desktop/windows"),
+      "#constants": resolve(root, "src/shared/constants"),
+      "#store": resolve(root, "src/shared/store"),
 
       // ✅ ADD THESE (new shared layer)
       "#shared": resolve(root, "src/shared"),
