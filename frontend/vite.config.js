@@ -12,8 +12,6 @@ export default defineConfig({
     alias: {
       // existing aliases (keep)
       "#components": resolve(root, "src/components"),
-      "#constants": resolve(root, "src/constants"),
-      "#store": resolve(root, "src/store"),
       "#hoc": resolve(root, "src/hoc"),
       "#hooks": resolve(root, "src/hooks"),
       "#windows": resolve(root, "src/windows"),

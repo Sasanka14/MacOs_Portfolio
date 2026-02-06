@@ -89,12 +89,28 @@ A modern, keyboard-first productivity application inspired by macOS Spotlight an
 The application uses a sophisticated architecture to deliver platform-appropriate experiences:
 
 ```javascript
-// Adaptive rendering based on device detection
+// SSR-safe adaptive rendering with runtime responsiveness
 const AppRoot = () => {
-  const isMobile = window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // SSR-safe responsive detection
+    if (typeof window === "undefined") return;
+    
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mediaQuery.matches);
+    
+    const handleChange = (e) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   return isMobile ? <IOSApp /> : <DesktopApp />;
 };
 ```
+
+⚠️ **SSR Safety:** The component uses `useState` and `useEffect` to safely detect screen size at runtime, avoiding direct `window` access during server-side rendering or module initialization.
 
 ### Desktop Experience (`DesktopApp`)
 - Full macOS-inspired windowing system
